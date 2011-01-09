@@ -1,13 +1,15 @@
-#summary One-sentence summary of this page.
+#summary リリース計画
+#labels Featured
 
 = リリース計画 =
 
 noticeboard2011のリリース計画を下記します。
 
 
-= Details =
+= 詳細 =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+概ね以下の様に進めていきたいと考えています。
+  * 第１イテレーション　Slim3チュートリアルを実施し開発環境を構築する
+  * 第２イテレーション　基本機能を実装する
+  * 第３イテレーション　検索、Delete、Addの機能を追加する
+  * 第４イテレーション　バッチ処理機能を追加する
