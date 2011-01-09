@@ -1,0 +1,155 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>noticeboard2011</title>
+<style type="text/css">
+.msg1 {
+ 			border: 1px double #AAAAAA;
+ 			width: 60px;
+ 			height: 20px;
+ 			background-color: red;
+ }
+.msg2 {
+ 			border: 1px double #AAAAAA;
+ 			width: 60px;
+ 			height: 20px;
+ 			background-color: yellow;
+ }
+.msg3 {
+ 			border: 1px double #AAAAAA;
+ 			width: 60px;
+ 			height: 20px;
+ 			background-color: #FFAAAA;
+ }
+.drop {
+			border: 1px double #AAAAAA;
+			background-color: lightblue;
+		}
+.dropped {
+			background-color: gray;
+		}
+ </style>
+
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<link href="css/flexigrid/flexigrid.css" rel="stylesheet" type="text/css">
+<link type="text/css" href="css/smoothness/jquery-ui-1.8.7.custom.css" rel="stylesheet" />
+<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.7.custom.min.js"></script>
+<script type="text/javascript" src="js/flexigrid.pack.js"></script>
+
+<script type="text/javascript">
+<!--
+function _preProcess( data ) {
+	$.each (data.rows,
+		function(i, val) {
+			val.cell[2] = '<div id="drop1" class="drop">' + val.cell[2] + '</div>';
+		}
+	);
+	return data;
+}
+
+function update(e) {
+    var col = e.parents("tr");
+    var cell = col[0].children;
+    //alert(cell[0].textContent + cell[1].textContent + 'の行き先を' + e.text() + 'に変更しました。');
+    jQuery.post("person/update",{"firstName":cell[0].textContent, "place":e.text()});
+}
+
+function test() {
+	alert('未実装です！');
+}
+
+$(document).ready(function() {
+	$("#datatable").flexigrid({
+		autoload: true,
+		url: "hello",
+		method: "post",
+		dataType: "json",
+		colModel: [
+					{display: "ファーストネーム", name : "firstName", width : 150, sortable : true, align: "center"},
+					{display: "ラストネーム", name : "lastName", width : 150, sortable : false, align: "center"},
+					{display: "行き先", name : "place", width : 70, sortable : false, align: "center"}
+		],
+		buttons : [
+					{name: 'Add', bclass: 'add', onpress : test},
+					{name: 'Delete', bclass: 'delete', onpress : test},
+					{separator: true}
+		],
+		searchitems : [  
+             {display: 'ファーストネーム', name : 'firstName'}
+        ],  
+		usepager: true,
+		title: "データ一覧",
+		useRp: true,
+		rp: 5,
+		rpOptions: [5,10,20],
+		pagestat: "{from} ～ {to} を表示 (総数: {total} )",
+		procmsg: "しばらくお待ちください……",
+		nomsg: "項目はありません。",
+		showTableToggleBtn: true,
+		singleSelect: true,
+		width: 500,
+		height: "auto",
+		preProcess: _preProcess
+		,onSuccess: postProcess
+	});
+
+	//テキストフィールドで値を変更したら、update関数を呼び出す。
+	//$("#datatable").change(update);
+
+});
+
+// flexigridの表が表示された後の処理
+function postProcess()  {
+	// Drag&Drop要素の生成
+	$(".msg1").draggable({revert: true});
+	$(".msg2").draggable({revert: true});
+	$(".msg3").draggable({revert: true});
+	$(".drop").droppable(
+		{ accept: '.msg1, .msg2, .msg3',
+			hoverClass: 'dropped',
+			drop:function(event,ui){
+				$(this).text(ui.draggable.attr("id"));
+				var val = ui.draggable.css("background-color");
+				$(this).css("background" ,val);
+				update($(this));
+			}
+		}
+	);
+
+	// 行き先の背景色を設定する
+	var elements  = document.getElementsByClassName("drop");
+	for (var i = 0; i < elements.length ; i++) {
+		//alert(elements[i].textContent + ':' + i);
+		var val = elements[i].textContent;
+		switch(val) {
+		case 'Absent':
+			elements[i].style.backgroundColor = "red";
+			break;
+		case 'Present':
+			elements[i].style.backgroundColor = "yellow";
+			break;
+		case 'Meeting':
+			elements[i].style.backgroundColor = "pink";
+		}
+		
+	}
+}
+
+//-->
+</script>
+</head>
+<body>
+<p><h3>行き先表示板</h3></p>
+<hr />
+<p><span id="message">Ajaxによる非同期通信を利用していますので、行き先にDrag&Dropしただけで更新されます。</span></p>
+<table id="datatable" style="display:none"></table>
+<br/>
+↓以下の札を行き先にDrag&Dropしてください。
+<div id="Absent" class="msg1">Absent</div>
+<div id="Present" class="msg2">Present</div>
+<div id="Meeting" class="msg3">Meeting</div>
+<a href="person/create"/>create
+</body>
+</html>
