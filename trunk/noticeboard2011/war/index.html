@@ -52,8 +52,12 @@ function _preProcess( data ) {
 function update(e) {
     var col = e.parents("tr");
     var cell = col[0].children;
-    //alert(cell[0].textContent + cell[1].textContent + 'の行き先を' + e.text() + 'に変更しました。');
-    jQuery.post("person/update",{"firstName":cell[0].textContent, "place":e.text()});
+    var param = cell[0].textContent;
+    if (param == null) {
+        param = cell[0].innerText;
+    }
+    //alert(param + cell[1].textContent + 'の行き先を' + e.text() + 'に変更しました。');
+    jQuery.post("person/update",{"firstName":param, "place":e.text()});
 }
 
 function test() {
@@ -119,10 +123,12 @@ function postProcess()  {
 	);
 
 	// 行き先の背景色を設定する
-	var elements  = document.getElementsByClassName("drop");
+    //var elements  = document.getElementsByClassName("drop");
+    var elements  = $(".drop");
+    //alert(elements.length);
 	for (var i = 0; i < elements.length ; i++) {
 		//alert(elements[i].textContent + ':' + i);
-		var val = elements[i].textContent;
+		var val = elements[i].innerHTML;
 		switch(val) {
 		case 'Absent':
 			elements[i].style.backgroundColor = "red";
@@ -144,6 +150,7 @@ function postProcess()  {
 <p><h3>行き先表示板</h3></p>
 <hr />
 <p><span id="message">Ajaxによる非同期通信を利用していますので、行き先にDrag&Dropしただけで更新されます。</span></p>
+現在、クロスブラウザテスト中です。<br/>
 <table id="datatable" style="display:none"></table>
 <br/>
 ↓以下の札を行き先にDrag&Dropしてください。
