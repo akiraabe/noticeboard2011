@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>noticeboard2011</title>
@@ -84,10 +85,10 @@ $(document).ready(function() {
              {display: 'ファーストネーム', name : 'firstName'}
         ],  
 		usepager: true,
-		title: "データ一覧",
+		title: "行き先表示板",
 		useRp: true,
-		rp: 5,
-		rpOptions: [5,10,20],
+		rp: 3,
+		rpOptions: [3,5,10,20],
 		pagestat: "{from} ～ {to} を表示 (総数: {total} )",
 		procmsg: "しばらくお待ちください……",
 		nomsg: "項目はありません。",
@@ -147,16 +148,13 @@ function postProcess()  {
 </script>
 </head>
 <body>
-<p><h3>行き先表示板</h3></p>
-<hr />
-<p><span id="message">Ajaxによる非同期通信を利用していますので、行き先にDrag&Dropしただけで更新されます。</span></p>
-現在、クロスブラウザテスト中です。<br/>
 <table id="datatable" style="display:none"></table>
 <br/>
-↓以下の札を行き先にDrag&Dropしてください。
+
 <div id="Absent" class="msg1">Absent</div>
 <div id="Present" class="msg2">Present</div>
 <div id="Meeting" class="msg3">Meeting</div>
+↑この上のプレートを行き先にDrag&Dropしてください。<br/>
 <a href="person/create"/>create
 </body>
 </html>
