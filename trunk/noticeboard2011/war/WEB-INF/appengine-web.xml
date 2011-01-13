@@ -9,6 +9,7 @@
         <include path="/css/**.png"/>
         <include path="/js/**.js"/>
         <include path="/**.html"/>
+        <include path="/**.ico"/>
     </static-files>
     
     <inbound-services>

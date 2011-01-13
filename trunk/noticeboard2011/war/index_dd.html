@@ -3,6 +3,34 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>noticeboard2011</title>
+<style type="text/css">
+.msg1 {
+ 			border: 1px double #AAAAAA;
+ 			width: 60px;
+ 			height: 20px;
+ 			background-color: red;
+ }
+.msg2 {
+ 			border: 1px double #AAAAAA;
+ 			width: 60px;
+ 			height: 20px;
+ 			background-color: yellow;
+ }
+.msg3 {
+ 			border: 1px double #AAAAAA;
+ 			width: 60px;
+ 			height: 20px;
+ 			background-color: #FFAAAA;
+ }
+.drop {
+			border: 1px double #AAAAAA;
+			background-color: lightblue;
+		}
+.dropped {
+			background-color: gray;
+		}
+ </style>
+
 <meta http-equiv="Content-Style-Type" content="text/css">
 <meta http-equiv="Content-Script-Type" content="text/javascript">
 <link href="css/flexigrid/flexigrid.css" rel="stylesheet" type="text/css">
@@ -16,35 +44,21 @@
 function _preProcess( data ) {
 	$.each (data.rows,
 		function(i, val) {
-			val.cell[3] = val.cell[2];
-			val.cell[2] = '<select id="sel" class="sel"><option value="undef">---</option><option value="Absent">Absent</option><option value="Present">Present</option><option value="Meeting">Meeting</option>';
+			val.cell[2] = '<div id="drop1" class="drop">' + val.cell[2] + '</div>';
 		}
 	);
 	return data;
 }
 
 function update(e) {
-	var target = $(e.target);
-    var col = target.parents("tr");
+    var col = e.parents("tr");
     var cell = col[0].children;
     var param = cell[0].textContent;
     if (param == null) {
         param = cell[0].innerText;
     }
     //alert(param + cell[1].textContent + 'の行き先を' + e.text() + 'に変更しました。');
-    jQuery.post("person/update",{"firstName":param, "place":target.context.value});
-
-    // 背景色更新
-    switch(target.context.value) {
-    case 'Absent':
-		$(e.target).css("background-color","red");
-		break;
-	case 'Present':
-		$(e.target).css("background-color","yellow");
-		break;
-	case 'Meeting':
-		$(e.target).css("background-color","pink");
-	}
+    jQuery.post("person/update",{"firstName":param, "place":e.text()});
 }
 
 function test() {
@@ -60,8 +74,7 @@ $(document).ready(function() {
 		colModel: [
 					{display: "ファーストネーム", name : "firstName", width : 150, sortable : true, align: "center"},
 					{display: "ラストネーム", name : "lastName", width : 150, sortable : false, align: "center"},
-					{display: "行き先", name : "place", width : 100, sortable : false, align: "center"},
-					{display: "hidden", name : "place2", width : 10, sortable : false, align: "center", hide: true}
+					{display: "行き先", name : "place", width : 70, sortable : false, align: "center"}
 		],
 		buttons : [
 					{name: 'Add', bclass: 'add', onpress : test},
@@ -72,9 +85,9 @@ $(document).ready(function() {
              {display: 'ファーストネーム', name : 'firstName'}
         ],  
 		usepager: true,
-		title: "noticeboard",
+		title: "行き先表示板",
 		useRp: true,
-		rp: 5,
+		rp: 3,
 		rpOptions: [3,5,10,20],
 		pagestat: "{from} ～ {to} を表示 (総数: {total} )",
 		procmsg: "しばらくお待ちください……",
@@ -87,33 +100,45 @@ $(document).ready(function() {
 		,onSuccess: postProcess
 	});
 
-	//リストボックスで値を変更したら、update関数を呼び出す。
-	$("#datatable").change(update);
+	//テキストフィールドで値を変更したら、update関数を呼び出す。
+	//$("#datatable").change(update);
 
 });
 
 // flexigridの表が表示された後の処理
 function postProcess()  {
+	// Drag&Drop要素の生成
+	$(".msg1").draggable({revert: true});
+	$(".msg2").draggable({revert: true});
+	$(".msg3").draggable({revert: true});
+	$(".drop").droppable(
+		{ accept: '.msg1, .msg2, .msg3',
+			hoverClass: 'dropped',
+			drop:function(event,ui){
+				$(this).text(ui.draggable.attr("id"));
+				var val = ui.draggable.css("background-color");
+				$(this).css("background" ,val);
+				update($(this));
+			}
+		}
+	);
 
 	// 行き先の背景色を設定する
     //var elements  = document.getElementsByClassName("drop");
-    var elements  = $(".sel");
+    var elements  = $(".drop");
     //alert(elements.length);
 	for (var i = 0; i < elements.length ; i++) {
-		//となりの値を抽出
-		var col = $(elements[i]).parents("tr");
-		var cell = col[0].children;
-		var param = $(cell[3]).text();
-		$(elements[i]).val(param);
-		switch(param) {
+		//alert(elements[i].textContent + ':' + i);
+		var val = elements[i].innerHTML;
+		switch(val) {
 		case 'Absent':
-			$(elements[i]).css("background-color","red");
+			elements[i].style.backgroundColor = "red";
 			break;
 		case 'Present':
-			$(elements[i]).css("background-color","yellow");
+			elements[i].style.backgroundColor = "yellow";
 			break;
 		case 'Meeting':
-			$(elements[i]).css("background-color","pink");
+			elements[i].style.backgroundColor = "pink";
 		}
 		
 	}
@@ -123,9 +148,13 @@ function postProcess()  {
 </script>
 </head>
 <body>
-<p><h3>noticeboard2011</h3></p>
 <table id="datatable" style="display:none"></table>
 <br/>
+
+<div id="Absent" class="msg1">Absent</div>
+<div id="Present" class="msg2">Present</div>
+<div id="Meeting" class="msg3">Meeting</div>
+↑この上のプレートを行き先にDrag&Dropしてください。<br/>
 <a href="person/create"/>create
 </body>
 </html>
