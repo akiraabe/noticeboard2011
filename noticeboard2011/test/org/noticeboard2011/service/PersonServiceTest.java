@@ -1,7 +1,9 @@
-package jsonic4gae.service;
+package org.noticeboard2011.service;
 
 import org.slim3.tester.AppEngineTestCase;
 import org.junit.Test;
+import org.noticeboard2011.service.PersonService;
+
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 

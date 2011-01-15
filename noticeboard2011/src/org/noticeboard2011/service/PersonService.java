@@ -1,11 +1,10 @@
-package jsonic4gae.service;
+package org.noticeboard2011.service;
 
 import java.util.List;
 import java.util.Map;
 
-import jsonic4gae.meta.PersonMeta;
-import jsonic4gae.model.Person;
-
+import org.noticeboard2011.meta.PersonMeta;
+import org.noticeboard2011.model.Person;
 import org.slim3.datastore.Datastore;
 import org.slim3.util.BeanUtil;
 

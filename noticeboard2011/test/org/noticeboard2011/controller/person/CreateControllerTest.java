@@ -1,7 +1,9 @@
-package jsonic4gae.controller.person;
+package org.noticeboard2011.controller.person;
 
 import org.slim3.tester.ControllerTestCase;
 import org.junit.Test;
+import org.noticeboard2011.controller.person.CreateController;
+
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
