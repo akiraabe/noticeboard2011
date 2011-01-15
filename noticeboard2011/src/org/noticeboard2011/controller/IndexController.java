@@ -16,9 +16,9 @@ import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.util.ThrowableUtil;
 
-public class HelloController extends Controller {
+public class IndexController extends Controller {
     
-    static Logger logger = Logger.getLogger(HelloController.class.getName());
+    static Logger logger = Logger.getLogger(IndexController.class.getName());
 
     private PersonService personService = new PersonService();
 
@@ -27,7 +27,7 @@ public class HelloController extends Controller {
         
 //        System.out.println("Hello!!!!");
         
-        logger.fine("HelloController#run start.");
+        logger.fine("IndexController#run start.");
 
 
         // Datastoreからのデータ取得
