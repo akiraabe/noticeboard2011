@@ -53,16 +53,27 @@ function _preProcess( data ) {
 function update(e) {
     var col = e.parents("tr");
     var cell = col[0].children;
-    var param = cell[0].textContent;
-    if (param == null) {
-        param = cell[0].innerText;
-    }
+    var param = $(cell[0]).text();
     //alert(param + cell[1].textContent + 'の行き先を' + e.text() + 'に変更しました。');
     jQuery.post("person/update",{"firstName":param, "place":e.text()});
 }
 
 function test() {
 	alert('未実装です！');
+}
+
+// 削除ボタンが押された時の処理
+var deletePressed = function(command, grid) {
+    var items = $('.trSelected',grid);
+    var itemlist = [];
+    var param = $(items[0].cells[0]).text();
+    alert(param + 'を削除します。');
+    items.fadeOut('slow')
+    $.post('person/delete',
+           { method:'delete',
+             deleteItems:param},
+           function(return_value, status) {},
+           'text');
 }
 
 $(document).ready(function() {
@@ -78,7 +89,7 @@ $(document).ready(function() {
 		],
 		buttons : [
 					{name: 'Add', bclass: 'add', onpress : test},
-					{name: 'Delete', bclass: 'delete', onpress : test},
+					{name: 'Delete', bclass: 'delete', onpress : deletePressed},
 					{separator: true}
 		],
 		searchitems : [  

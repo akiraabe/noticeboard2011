@@ -1,5 +1,7 @@
 package jsonic4gae.controller.person;
 
+import java.util.logging.Logger;
+
 import jsonic4gae.service.PersonService;
 
 import org.slim3.controller.Controller;
@@ -15,10 +17,13 @@ import org.slim3.controller.Navigation;
  */
 public class UpdateController extends Controller {
     
+    static Logger logger = Logger.getLogger(UpdateController.class.getName());
     private PersonService personService = new PersonService();
 
     @Override
     public Navigation run() throws Exception {
+        
+        logger.fine("UpdateController#run start.");
         
         //TODO 入力パラメータのチェックが必要
 //        System.out.println(request.getAttribute("firstName"));
