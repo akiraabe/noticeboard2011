@@ -27,11 +27,8 @@ function update(e) {
 	var target = $(e.target);
     var col = target.parents("tr");
     var cell = col[0].children;
-    var param = cell[0].textContent;
-    if (param == null) {
-        param = cell[0].innerText;
-    }
-    //alert(param + cell[1].textContent + 'の行き先を' + e.text() + 'に変更しました。');
+    var param = $(cell[0]).text();
+    //alert(param + $(cell[1]).text() + 'の行き先を' + target.context.value + 'に変更しました。');
     jQuery.post("person/update",{"firstName":param, "place":target.context.value});
 
     // 背景色更新
@@ -100,7 +97,7 @@ function postProcess()  {
     var elements  = $(".sel");
     //alert(elements.length);
 	for (var i = 0; i < elements.length ; i++) {
-		//となりの値を抽出
+		//[3]の値を抽出
 		var col = $(elements[i]).parents("tr");
 		var cell = col[0].children;
 		var param = $(cell[3]).text();

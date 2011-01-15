@@ -5,6 +5,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import jsonic4gae.model.Person;
 import jsonic4gae.service.PersonService;
@@ -16,6 +17,8 @@ import org.slim3.controller.Navigation;
 import org.slim3.util.ThrowableUtil;
 
 public class HelloController extends Controller {
+    
+    static Logger logger = Logger.getLogger(HelloController.class.getName());
 
     private PersonService personService = new PersonService();
 
@@ -23,10 +26,9 @@ public class HelloController extends Controller {
     protected Navigation run() throws Exception {
         
 //        System.out.println("Hello!!!!");
+        
+        logger.fine("HelloController#run start.");
 
-        // TODO　パラメータ"rp"を判定してページングする処理はサーバ側で書かないといけない。 ⇒一応書いた
-        // TODO こういう処理を行うユーティリティがあるかも知れないので探す｡｡｡
-        // TODO その他にサーバ側もは、sort処理も課せられている。
 
         // Datastoreからのデータ取得
         // データの取り出し
