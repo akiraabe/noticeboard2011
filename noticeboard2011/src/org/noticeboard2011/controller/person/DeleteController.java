@@ -14,7 +14,7 @@ public class DeleteController extends Controller {
         
         logger.fine("DeleteController#run start.");
         logger.fine("method : " + request.getParameter("method"));
-        logger.fine("deketeItems : " + request.getParameter("deleteItems"));
+        logger.fine("deleteItems : " + request.getParameter("deleteItems"));
 
         //TODO 削除処理の実装を行う。（第３イテレーション）
         

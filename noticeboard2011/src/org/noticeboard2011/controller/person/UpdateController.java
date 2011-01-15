@@ -2,7 +2,6 @@ package org.noticeboard2011.controller.person;
 
 import java.util.logging.Logger;
 
-
 import org.noticeboard2011.service.PersonService;
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
@@ -24,13 +23,13 @@ public class UpdateController extends Controller {
     public Navigation run() throws Exception {
         
         logger.fine("UpdateController#run start.");
+        logger.fine("firstName : " + request.getParameter("firstName"));
+        logger.fine("id : " + request.getParameter("id"));
+        logger.fine("place : " + request.getParameter("place"));
         
-        //TODO 入力パラメータのチェックが必要
-//        System.out.println(request.getAttribute("firstName"));
-//        System.out.println(request.getAttribute("place"));
-        
-        personService.update((String) request.getAttribute("firstName"), (String) request.getAttribute("place"));
+        personService.update(new Long(request.getParameter("id")), request.getParameter("place"));
         
         return null;
     }
+
 }

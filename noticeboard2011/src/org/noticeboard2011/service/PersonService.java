@@ -9,6 +9,7 @@ import org.slim3.datastore.Datastore;
 import org.slim3.util.BeanUtil;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Transaction;
 
 public class PersonService {
@@ -52,15 +53,9 @@ public class PersonService {
         return person;
     }
 
-    public void update(String firstName, String place) {
-        // TODO Auto-generated method stub
-        PersonMeta meta = PersonMeta.get();
-        Person person =
-            Datastore.query(Person.class).filter(
-                meta.firstName.equal(firstName)).asSingle();
+    public void update(Long id, String place) {
+        Person person = Datastore.get(Person.class, KeyFactory.createKey("Person", id));
         person.setPlace(place);
         Datastore.put(person);
-
     }
-
 }

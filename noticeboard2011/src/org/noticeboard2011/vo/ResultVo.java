@@ -5,6 +5,13 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * JSON形式でflexigrid用のデータを返却するためのValueObjectである。<br/>
+ * このオブジェクトをJSONICに渡してJSON形式のデータを作成する。
+ * 
+ * @author akiraabe
+ *
+ */
 public class ResultVo {
     
     private String page;
