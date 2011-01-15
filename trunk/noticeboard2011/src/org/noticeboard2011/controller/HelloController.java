@@ -1,4 +1,4 @@
-package jsonic4gae.controller;
+package org.noticeboard2011.controller;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import jsonic4gae.model.Person;
-import jsonic4gae.service.PersonService;
-import jsonic4gae.vo.ResultVo;
 import net.arnx.jsonic.JSON;
 
+import org.noticeboard2011.model.Person;
+import org.noticeboard2011.service.PersonService;
+import org.noticeboard2011.vo.ResultVo;
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.util.ThrowableUtil;

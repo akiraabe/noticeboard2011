@@ -1,9 +1,9 @@
-package jsonic4gae.model;
+package org.noticeboard2011.model;
 
 import java.io.Serializable;
 
-import jsonic4gae.util.StringUtil;
 
+import org.noticeboard2011.util.StringUtil;
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
 

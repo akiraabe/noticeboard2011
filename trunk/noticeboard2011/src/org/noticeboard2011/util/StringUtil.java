@@ -1,4 +1,4 @@
-package jsonic4gae.util;
+package org.noticeboard2011.util;
 
 public class StringUtil {
 

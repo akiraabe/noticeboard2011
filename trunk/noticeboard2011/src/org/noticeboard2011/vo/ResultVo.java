@@ -1,4 +1,4 @@
-package jsonic4gae.vo;
+package org.noticeboard2011.vo;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
