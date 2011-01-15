@@ -53,10 +53,14 @@ public class IndexController extends Controller {
         List array = new ArrayList();
 
         for (Person person : people) {
-            String[] strArray = new String[3];
-            strArray[0] = person.getFirstName();
-            strArray[1] = person.getLastName();
-            strArray[2] = person.getPlace();
+            String[] strArray = new String[5];
+            strArray[0] = new Long(person.getKey().getId()).toString();
+            strArray[1] = person.getVersion().toString();
+            strArray[2] = person.getFirstName();
+            strArray[3] = person.getLastName();
+            strArray[4] = person.getPlace();
+
+            
             array.add(strArray);
         }
 

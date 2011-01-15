@@ -13,23 +13,63 @@
 
 <script type="text/javascript">
 <!--
-function _preProcess( data ) {
-	$.each (data.rows,
-		function(i, val) {
-			val.cell[3] = val.cell[2];
-			val.cell[2] = '<select id="sel" class="sel"><option value="undef">---</option><option value="Absent">Absent</option><option value="Present">Present</option><option value="Meeting">Meeting</option>';
-		}
-	);
-	return data;
-}
+/*  
+ * ページのLoad時に呼び出される処理
+ */
+$(document).ready(function() {
+	$("#datatable").flexigrid({
+		autoload: true,
+		url: "index",
+		method: "post",
+		dataType: "json",
+		colModel: [
+					{display: "id", name : "id", width : 30, sortable : false, align: "center", hide : false},
+					{display: "version", name : "version", width : 50, sortable : false, align: "center", hide : true},
+					{display: "ファーストネーム", name : "firstName", width : 150, sortable : true, align: "center"},
+					{display: "ラストネーム", name : "lastName", width : 150, sortable : false, align: "center"},
+					{display: "行き先", name : "place", width : 100, sortable : false, align: "center"},
+					{display: "hidden", name : "place2", width : 10, sortable : false, align: "center", hide: true}
+		],
+		buttons : [
+					{name: 'Add', bclass: 'add', onpress : test},
+					{name: 'Delete', bclass: 'delete', onpress : deletePressed},
+					{separator: true}
+		],
+		searchitems : [  
+             {display: 'ファーストネーム', name : 'firstName'}
+        ],  
+		usepager: true,
+		title: "noticeboard",
+		useRp: true,
+		rp: 10,
+		rpOptions: [3,5,10,20,30],
+		pagestat: "{from} ～ {to} を表示 (総数: {total} )",
+		procmsg: "しばらくお待ちください……",
+		nomsg: "項目はありません。",
+		showTableToggleBtn: true,
+		singleSelect: true,
+		width: 500,
+		height: "auto",
+		preProcess: preProcess
+		,onSuccess: postProcess
+	});
 
+	//リストボックスで値を変更したら、update関数を呼び出す。
+	$("#datatable").change(update);
+
+});
+
+/*
+ * 行き先の更新処理
+ */ 
 function update(e) {
 	var target = $(e.target);
     var col = target.parents("tr");
     var cell = col[0].children;
-    var param = $(cell[0]).text();
-    //alert(param + $(cell[1]).text() + 'の行き先を' + target.context.value + 'に変更しました。');
-    jQuery.post("person/update",{"firstName":param, "place":target.context.value});
+    var id = $(cell[0]).text();
+    var firstName = $(cell[2]).text();
+    //alert($(cell[2]).text() + 'の行き先を' + target.context.value + 'に変更しました。');
+    jQuery.post("person/update",{"firstName":firstName, "id":id, "place":target.context.value});
 
     // 背景色更新
     switch(target.context.value) {
@@ -48,48 +88,49 @@ function test() {
 	alert('未実装です！');
 }
 
-$(document).ready(function() {
-	$("#datatable").flexigrid({
-		autoload: true,
-		url: "index",
-		method: "post",
-		dataType: "json",
-		colModel: [
-					{display: "ファーストネーム", name : "firstName", width : 150, sortable : true, align: "center"},
-					{display: "ラストネーム", name : "lastName", width : 150, sortable : false, align: "center"},
-					{display: "行き先", name : "place", width : 100, sortable : false, align: "center"},
-					{display: "hidden", name : "place2", width : 10, sortable : false, align: "center", hide: true}
-		],
-		buttons : [
-					{name: 'Add', bclass: 'add', onpress : test},
-					{name: 'Delete', bclass: 'delete', onpress : test},
-					{separator: true}
-		],
-		searchitems : [  
-             {display: 'ファーストネーム', name : 'firstName'}
-        ],  
-		usepager: true,
-		title: "noticeboard",
-		useRp: true,
-		rp: 5,
-		rpOptions: [3,5,10,20],
-		pagestat: "{from} ～ {to} を表示 (総数: {total} )",
-		procmsg: "しばらくお待ちください……",
-		nomsg: "項目はありません。",
-		showTableToggleBtn: true,
-		singleSelect: true,
-		width: 500,
-		height: "auto",
-		preProcess: _preProcess
-		,onSuccess: postProcess
-	});
+/*
+ * 削除ボタンが押された時の処理
+ */
+var deletePressed = function(command, grid) {
+    var items = $('.trSelected',grid);
+    var itemlist = [];
+    var param = $(items[0].cells[0]).text();
+    $('#some-content').text($(items[0].cells[2]).text() + 'を削除しますか？');
+    $('#some-content').dialog({
+    	title:'削除確認',
+    	width:400,
+    	buttons:{
+    		'はい':function(){
+    			items.fadeOut('slow')
+        		$.post('person/delete', // エラーハンドリングが必要ならば$.ajaxを使う
+             		  { method:'delete',
+              		   deleteItems:param},
+            		   function(return_value, status) {},
+         		      'text');
+    			$(this).dialog("close");
+				},
+    		'いいえ':function() { $(this).dialog("close"); }
+    	},
+    	modal:true
+    });
+}
 
-	//リストボックスで値を変更したら、update関数を呼び出す。
-	$("#datatable").change(update);
+/*
+ * flexigridの初期処理（JSONデータを受け取った後で、かつ、テーブルを表示する前に呼ばれる）
+ */
+function preProcess( data ) {
+	$.each (data.rows,
+		function(i, val) {
+			val.cell[5] = val.cell[4];
+			val.cell[4] = '<select id="sel" class="sel"><option value="undef">---</option><option value="Absent">Absent</option><option value="Present">Present</option><option value="Meeting">Meeting</option>';
+		}
+	);
+	return data;
+}
 
-});
-
-// flexigridの表が表示された後の処理
+/*
+ * flexigridの表が表示された後の処理
+ */
 function postProcess()  {
 
 	// 行き先の背景色を設定する
@@ -97,10 +138,10 @@ function postProcess()  {
     var elements  = $(".sel");
     //alert(elements.length);
 	for (var i = 0; i < elements.length ; i++) {
-		//[3]の値を抽出
+		//[5]の値を抽出
 		var col = $(elements[i]).parents("tr");
 		var cell = col[0].children;
-		var param = $(cell[3]).text();
+		var param = $(cell[5]).text();
 		$(elements[i]).val(param);
 		switch(param) {
 		case 'Absent':
@@ -112,7 +153,6 @@ function postProcess()  {
 		case 'Meeting':
 			$(elements[i]).css("background-color","pink");
 		}
-		
 	}
 }
 
@@ -124,5 +164,6 @@ function postProcess()  {
 <table id="datatable" style="display:none"></table>
 <br/>
 <a href="person/create"/>create
+<div id="some-content"></div>
 </body>
 </html>
