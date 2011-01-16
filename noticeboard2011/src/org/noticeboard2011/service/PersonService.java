@@ -70,4 +70,13 @@ public class PersonService {
         person.setLastName(lastName);
         Datastore.put(person);
     }
+
+    public void initialize() {
+        // TODO Auto-generated method stub
+        List<Person> list = Datastore.query(personMeta).asList();
+        for (Person person : list) {
+            person.setPlace("undefined");
+        }
+        Datastore.put(list);
+    }
 }
