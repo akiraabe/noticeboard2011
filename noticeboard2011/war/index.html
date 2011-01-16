@@ -5,13 +5,14 @@
 <title>noticeboard2011</title>
 <meta http-equiv="Content-Style-Type" content="text/css">
 <meta http-equiv="Content-Script-Type" content="text/javascript">
-<link href="css/flexigrid/flexigrid.css" rel="stylesheet" type="text/css">
-<link type="text/css" href="css/smoothness/jquery-ui-1.8.7.custom.css" rel="stylesheet" />
-<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
-<script type="text/javascript" src="js/jquery-ui-1.8.7.custom.min.js"></script>
-<script type="text/javascript" src="js/flexigrid.pack.js"></script>
-
-<script type="text/javascript">
+<link href="css/flexigrid/flexigrid.css" rel="stylesheet"
+	type="text/css">
+<link type="text/css" href="css/smoothness/jquery-ui-1.8.7.custom.css"
+	rel="stylesheet" />
+<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script> <script
+	type="text/javascript" src="js/jquery-ui-1.8.7.custom.min.js"></script>
+<script type="text/javascript" src="js/flexigrid.pack.js"></script> <script
+	type="text/javascript">
 <!--
 /*  
  * ページのLoad時に呼び出される処理
@@ -32,6 +33,7 @@ $(document).ready(function() {
 		],
 		buttons : [
 					{name: 'Add', bclass: 'add', onpress : test},
+					{name: 'Edit', bclass: 'edit', onpress : editPressed},
 					{name: 'Delete', bclass: 'delete', onpress : deletePressed},
 					{separator: true}
 		],
@@ -57,6 +59,44 @@ $(document).ready(function() {
 	//リストボックスで値を変更したら、update関数を呼び出す。
 	$("#datatable").change(update);
 
+	//編集ダイアログの準備
+	$("#edit-dialog").dialog({
+		modal:true,
+		autoOpen:false,
+		resizable:false,
+		draggable:true,
+		title:"編集入力",
+		width: 450,
+		show:"scale",
+		hide:"scale",
+		buttons: {
+		"OK": function() {
+			var id = $("#id").val();
+			var firstName = $("#firstNameInput").val();
+			var lastName = $("#lastNameInput").val();
+			//alert('id:' + id + ' name:' + firstName + lastName);
+			jQuery.post("person/update",
+					{"command":"PROPERTY",
+				     "id":id, 
+				     "firstName":firstName, 
+				     "lastName":lastName},
+				     function(data, status) {
+				    	 //alert(status);
+				    	 //alert(data.returncode);
+				    	 if (data.returncode == 'INVALID') {
+					    	 alert('VALIDATION ERROR');
+				    	 }
+				    	 $("#datatable").flexReload();
+				     },
+				     'json');
+			$(this).dialog("close");
+		},
+		"Cancel": function() {
+			$(this).dialog("close");
+		}
+	}
+	});
+
 });
 
 /*
@@ -69,7 +109,12 @@ function update(e) {
     var id = $(cell[0]).text();
     var firstName = $(cell[2]).text();
     //alert($(cell[2]).text() + 'の行き先を' + target.context.value + 'に変更しました。');
-    jQuery.post("person/update",{"firstName":firstName, "id":id, "place":target.context.value});
+    jQuery.post("person/update",
+    	    {"command":"PLACE", 
+	         "firstName":firstName,
+	         "id":id,
+	         "place":target.context.value}
+	         );
 
     // 背景色更新
     switch(target.context.value) {
@@ -86,6 +131,23 @@ function update(e) {
 
 function test() {
 	alert('未実装です！');
+	$.get('person/create');
+}
+
+/*
+ * 編集ボタンが押されたときの処理
+ */
+var editPressed = function(command, grid) {
+	var items = $('.trSelected', grid);
+	var itemlist = [];
+	var id = $(items[0].cells[0]).text();
+	//TODO 以下の２行は列の並べ替えをされると正しく動かなくなる。
+	var firstName = $(items[0].cells[2]).text();
+	var lastName = $(items[0].cells[3]).text();
+	$("#id").val(id);
+	$("#firstNameInput").val(firstName);
+	$("#lastNameInput").val(lastName);
+	$("#edit-dialog").dialog("open");
 }
 
 /*
@@ -95,8 +157,8 @@ var deletePressed = function(command, grid) {
     var items = $('.trSelected',grid);
     var itemlist = [];
     var param = $(items[0].cells[0]).text();
-    $('#some-content').text($(items[0].cells[2]).text() + 'を削除しますか？');
-    $('#some-content').dialog({
+    $('#delete-confirm-dialog').text($(items[0].cells[2]).text() + 'を削除しますか？');
+    $('#delete-confirm-dialog').dialog({
     	title:'削除確認',
     	width:400,
     	buttons:{
@@ -105,8 +167,13 @@ var deletePressed = function(command, grid) {
         		$.post('person/delete', // エラーハンドリングが必要ならば$.ajaxを使う
              		  { method:'delete',
               		   deleteItems:param},
-            		   function(return_value, status) {},
-         		      'text');
+            		   function(data, status) {
+                		   if (data.returncode == 'NOTIMPLEMENT') {
+                    		   alert('削除処理はサーバサイドでまだ実装されていません。');
+                		   }
+                		   $("#datatable").flexReload();
+                	   },
+         		      'json');
     			$(this).dialog("close");
 				},
     		'いいえ':function() { $(this).dialog("close"); }
@@ -160,10 +227,16 @@ function postProcess()  {
 </script>
 </head>
 <body>
-<p><h3>noticeboard2011</h3></p>
-<table id="datatable" style="display:none"></table>
-<br/>
-<a href="person/create"/>create
-<div id="some-content"></div>
+<p>
+<h3>noticeboard2011</h3>
+</p>
+<table id="datatable" style="display: none"></table>
+<br />
+<a href="person/create">create</a>
+<div id="delete-confirm-dialog"></div>
+<div id="edit-dialog">編集内容を入力してください。 <input type="hidden" id="id" />
+<br />
+FirstName <input type="text" id="firstNameInput" size="20" /> <br />
+LastName <input type="text" id="lastNameInput" size="20" /></div>
 </body>
 </html>
