@@ -1,0 +1,9 @@
+<?xml version="1.0" endoding="UTF-8"?>
+<cronentries>
+  <cron>
+  	<url>/person/initialize</url>
+  	<description>Initialize place in every morning</description>
+  	<schedule>every 3 mins</schedule>
+    <timezone>Asia/Tokyo</timezone>
+  </cron>
+</cronentries>

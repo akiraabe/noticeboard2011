@@ -24,14 +24,19 @@ public class IndexController extends AbstractJsonController {
         int page = new Integer(request.getParameter("page"));
         int rp = new Integer(request.getParameter("rp"));
         String sortorder = request.getParameter("sortorder");
+        String qtype = request.getParameter("qtype");
+        String query = request.getParameter("query");
         logger.fine("page : " + page);
         logger.fine("rp : " + rp);
+        logger.fine("sortorder : " + sortorder);
+        logger.fine("qtype : " + qtype);
+        logger.fine("query : " + query);
 
         // ページング用の開始位置の算出
         int startIndex = rp * (page - 1);
 
         // Datastoreからのデータ取得
-        List<Person> people = getPersonList(rp, sortorder, startIndex);
+        List<Person> people = getPersonList(rp, sortorder, startIndex, query);
 
         // JSON形式のデータ作成(for flexigrid)
         ResultVo data = generateJsonData(people);
@@ -42,20 +47,14 @@ public class IndexController extends AbstractJsonController {
         return null;
     }
 
-    private List<Person> getPersonList(int rp, String sortorder, int startIndex) {
-        List<Person> people = null;
-        if ("desc".equals(sortorder)) {
-            people = personService.getPersonListDesc(startIndex, rp);
-        } else {
-            people = personService.getPersonList(startIndex, rp);
-        }
-        return people;
+    private List<Person> getPersonList(int rp, String sortorder, int startIndex, String query) {
+       return personService.getPersonList(startIndex, rp, query, sortorder);
     }
     
     private ResultVo generateJsonData(List<Person> people) {
         ResultVo data = new ResultVo();
         data.setPage((String) request.getAttribute("page"));
-        data.setTotal(personService.count());
+        data.setTotal(personService.count(request.getParameter("query")));
 
         // データが入っている配列を作成する
         List array = new ArrayList();
