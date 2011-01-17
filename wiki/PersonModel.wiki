@@ -1,0 +1,60 @@
+#summary PersonModelのソースコード説明.
+
+= PersonModelのソースコード説明 =
+
+行き先表示板アプリは、モデルとして"Person"を保有する。
+これはDatastoreのカインドに対応する。
+<br/>
+Personモデルは、現時点では、以下の項目を保有している。
+  * Key (Datastoreのキー）
+  * firstName （名）
+　* lastName　（姓）
+  * place　（居場所）
+  * version　（排他制御用のバージョン番号）
+
+
+= Details =
+
+{{{
+package org.noticeboard2011.model;
+
+import java.io.Serializable;
+
+import org.noticeboard2011.util.StringUtil;
+import org.slim3.datastore.Attribute;
+import org.slim3.datastore.Model;
+
+import com.google.appengine.api.datastore.Key;
+
+/**
+ * Personモデル
+ * 
+ * @author akiraabe
+ *
+ */
+@Model(schemaVersion = 1)
+public class Person implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Attribute(primaryKey = true)
+    private Key key;
+
+    @Attribute(version = true)
+    private Long version;
+    
+    private String firstName;
+    private String lastName;
+    private String place;
+
+    // この他に、フィールドのsetter,getterなどのメソッドがあるが省略。
+
+}
+
+}}}
+
+== 説明 ==
+
+上記のように、モデルはアノテーション（@Model、@Attribute）がある以外は、通常のJavaBeansである。<br/>
+@Modelは、これがslim3のモデルであることを表す。<br/>
+@Attributeはパラメータにより、primaryKeyであること、version番号用のフィールドであることなどを表す。
