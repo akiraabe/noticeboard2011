@@ -89,15 +89,15 @@ Datastoreからの取得（key指定）は以下のようにコーディング�
 }}}
 
 == slim3を用いた開発手順 ==
-slim3のモデルは、build.xmlの"gen-model"ターゲットを実行することにより、コードのテンプレートが自動生成されます。（自動生成せずに完全に手作業でコーディングすることも可能ですが、自動生成する方が楽です。）手順の詳細は、以下のURLを参照してください。<br/>
+slim3のモデルは、build.xmlの"gen-model"ターゲットを実行することにより、コードのテンプレートが自動生成される。（自動生成せずに完全に手作業でコーディングすることも可能だが、自動生成する方が楽である。）手順の詳細は、以下のURLを参照。<br/>
 http://sites.google.com/site/slim3documentja/getting-started/creating-form-1
 <br/>
-また、モデルを生成すると、Annotation Processing Toolによってモデルのメタデータが自動的に生成されます。（これはeclipseの機能を使って自動的に実行・生成されます。）メタデータについては、以下のURLを参照してください。<br/>
+また、モデルを生成すると、Annotation Processing Toolによってモデルのメタデータが自動的に生成される。（これはeclipseの機能を使って自動的に実行・生成される。）メタデータについては、以下のURLを参照。<br/>
 http://sites.google.com/site/slim3documentja/documents/slim3-datastore/defining-data-classes#TOC-2
 <br/>
 http://sites.google.com/site/slim3documentja/documents/slim3-datastore
 <br/>
-メタデータは簡単に言うと、モデルとエンティティのマッピングメソッドが含まれています。
+メタデータは、簡単に言うと、モデルとエンティティのマッピングメソッドが含まれている。
 
 == その他参考(URL) ==
 http://sites.google.com/site/slim3documentja/documents/slim3-datastore/defining-data-classes
