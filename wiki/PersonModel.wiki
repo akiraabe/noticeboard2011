@@ -5,10 +5,11 @@
 行き先表示板アプリは、モデルとして"Person"を保有する。
 これはDatastoreのカインドに対応する。
 <br/>
+slim3のモデルは、slim3の機能によりDatastoreへの永続化やDatastoreからの検索が可能になっている。<br/>
 Personモデルは、現時点では、以下の項目を保有している。
   * Key (Datastoreのキー）
   * firstName （名）
-　* lastName　（姓）
+  * lastName　（姓）
   * place　（居場所）
   * version　（排他制御用のバージョン番号）
 
