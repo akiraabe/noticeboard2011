@@ -2,8 +2,8 @@
 
 = PersonModelのソースコード説明 =
 
-行き先表示板アプリは、モデルとして"Person"を保有する。
-これはDatastoreのカインドに対応する。
+行き先表示板アプリは、モデルとして"Person"を保有する。<br/>
+モデルはDatastoreのカインド（RDBのエンティティ）に対応する。
 <br/>
 slim3のモデルは、slim3の機能によりDatastoreへの永続化やDatastoreからの検索が可能になっている。<br/>
 Personモデルは、現時点では、以下の項目を保有している。
@@ -56,6 +56,50 @@ public class Person implements Serializable {
 
 == 説明 ==
 
-上記のように、モデルはアノテーション（@Model、@Attribute）がある以外は、通常のJavaBeansである。<br/>
+ソースコードを見ると分かるとおり、モデルはアノテーション（@Model、@Attribute）がある以外は、通常の!JavaBeansである。<br/>
 @Modelは、これがslim3のモデルであることを表す。<br/>
 @Attributeはパラメータにより、primaryKeyであること、version番号用のフィールドであることなどを表す。
+
+== 用例 ==
+
+Datastoreへの永続化の場合には以下のようにコーディングする。
+{{{
+        // モデルのインスタンス生成
+        Person person = new Person();
+        // フィールドへの値のセット（keyとversionは自動設定）
+        person.setFirstName("James");
+        person.setLastName("Brown");
+        person.setPlace("Heaven?");
+
+        // Transactionを開始して、Datastore.putにより永続化
+        Transaction tx = Datastore.beginTransaction();
+        Datastore.put(tx, person);
+        tx.commit();
+}}}
+
+Datastoreからの取得（key指定）は以下のようにコーディングする。
+{{{
+    // PersonMetaをインスタンス変数に保有
+    private PersonMeta personMeta = PersonMeta.get();
+
+    // keyとバージョン番号を取得し、Datastoreからgetする
+    public Person get(Key key, Long version) {
+        return Datastore.get(personMeta, key, version);
+    }
+}}}
+
+== slim3を用いた開発手順 ==
+slim3のモデルは、build.xmlの"gen-model"ターゲットを実行することにより、コードのテンプレートが自動生成される。手順の詳細は、以下のURLを参照してください。<br/>
+http://sites.google.com/site/slim3documentja/getting-started/creating-form-1
+<br/>
+また、モデルを生成すると、Annotation Processing Toolによってモデルのメタデータが自動的に生成されます。（これはeclipseの機能を使って自動的に実行・生成されます。）メタデータについては、以下のURLを参照してください。<br/>
+http://sites.google.com/site/slim3documentja/documents/slim3-datastore/defining-data-classes#TOC-2
+<br/>
+http://sites.google.com/site/slim3documentja/documents/slim3-datastore
+<br/>
+メタデータは簡単に言うと、モデルとエンティティのマッピングメソッドが含まれています。
+
+== その他参考(URL) ==
+http://sites.google.com/site/slim3documentja/documents/slim3-datastore/defining-data-classes
+<br/>
+http://sites.google.com/site/slim3documentja/documents/slim3-datastore/creating-getting-and-deleting-model#TOC-1
