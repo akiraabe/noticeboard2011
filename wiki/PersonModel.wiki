@@ -2,10 +2,10 @@
 
 = PersonModelのソースコード説明 =
 
-行き先表示板アプリは、モデルとして"Person"を保有する。<br/>
+行き先表示板アプリは、モデルとして"Person"（人の情報）を保有する。<br/>
 モデルはDatastoreのカインド（RDBのエンティティ）に対応する。
 <br/>
-slim3のモデルは、slim3の機能によりDatastoreへの永続化やDatastoreからの検索が可能になっている。<br/>
+slim3のモデルは、Datastoreへの永続化やDatastoreからの検索が可能になっている。<br/>
 Personモデルは、現時点では、以下の項目を保有している。
   * Key (Datastoreのキー）
   * firstName （名）
@@ -89,7 +89,7 @@ Datastoreからの取得（key指定）は以下のようにコーディング�
 }}}
 
 == slim3を用いた開発手順 ==
-slim3のモデルは、build.xmlの"gen-model"ターゲットを実行することにより、コードのテンプレートが自動生成される。手順の詳細は、以下のURLを参照してください。<br/>
+slim3のモデルは、build.xmlの"gen-model"ターゲットを実行することにより、コードのテンプレートが自動生成されます。（自動生成せずに完全に手作業でコーディングすることも可能ですが、自動生成する方が楽です。）手順の詳細は、以下のURLを参照してください。<br/>
 http://sites.google.com/site/slim3documentja/getting-started/creating-form-1
 <br/>
 また、モデルを生成すると、Annotation Processing Toolによってモデルのメタデータが自動的に生成されます。（これはeclipseの機能を使って自動的に実行・生成されます。）メタデータについては、以下のURLを参照してください。<br/>
