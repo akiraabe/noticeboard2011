@@ -1,0 +1,23 @@
+#summary 人の登録処理の説明
+
+= 人の登録処理の説明 =
+
+ここでは人の登録処理について説明する。<br/>
+
+=== 前提知識（URLマッピングについて） ===
+人の登録は、<br/>
+http://noticeboard2011.appspot.com/person/create
+<br/>
+というURLにより呼び出しが可能である。
+<br/>
+<br/>
+slim3の場合には、リクエストURLパスをコントローラに自動的にマッピングしている。この場合には、上記URLから、{ルートパッケージ}.controller.person.CreateControllerというのにマッピングされる。<br/>
+マッピングルールの詳細は以下を参照。<br/>
+http://sites.google.com/site/slim3documentja/documents/slim3-controller/url-mapping
+
+= 詳細 =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
