@@ -21,7 +21,8 @@ Slim3のコントローラはサーブレットの薄いラッパーである。
 
 == 処理の流れ ==
 人の登録機能の処理の流れを下記する。
-  * アクターは、http://noticeboard2011.appspot.com/person/createのURLでシステムにリクエストする。
+  * アクターは、http://noticeboard2011.appspot.com/person/create
+のURLでシステムにリクエストする。
   * システムは、上記リクエストにより{ルートパッケージ}.controller.person.CreateControllerに制御を移す。
   * CreateControllerは、create.jsp（入力用の画面）を表示する。
   * アクターは、入力用画面に対して必要項目を入力し、「登録」ボタンを押下する。
