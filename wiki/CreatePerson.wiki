@@ -30,7 +30,7 @@ Slim3のコントローラはサーブレットの薄いラッパーである。
   * InsertControllerは入力内容を精査し、OKであれば、行き先表示画面に遷移（リダイレクト）し、精査NGであれば、エラーメッセージとともに入力用の画面に戻る。
 
 == ソースコード ==
-=== CreateController.java ===
+=== !CreateController.java ===
 {{{
 package org.noticeboard2011.controller.person;
 
@@ -50,6 +50,9 @@ public class CreateController extends Controller {
     }
 }
 }}}
+
+CreateControllerのrunメソッドが呼ばれる。
+ここでは、単純にcreate.jspに遷移（forward）しているだけ。
 
 === create.jsp ===
 {{{
@@ -102,7 +105,17 @@ public class CreateController extends Controller {
 </html>
 }}}
 
-=== InsertController ===
+上記コードの、
+{{{
+<ul>
+<c:forEach var="e" items="${f:errors()}">
+<li>${f:h(e)}</li>
+</c:forEach>
+</ul>
+}}}
+の部分により、バリデーションエラー時のメッセージが表示される。
+
+=== !InsertController.java ===
 {{{
 package org.noticeboard2011.controller.person;
 
@@ -145,3 +158,10 @@ public class InsertController extends Controller {
 }
 
 }}}
+
+まず最初に、privateメソッドのvalidate()を呼び出す。<br/>
+ここでエラーがある場合には、もとの画面（create.jsp）に遷移する。<br/>
+エラーが無い場合には、PersonServiceのinsertメソッドを呼び出す。引数はここでは、requestパラメータのMapである。<br/>
+その後に、ルートにリダイレクトしている。
+
+=== PersonService.java ===
