@@ -2,13 +2,18 @@ package org.noticeboard2011.model;
 
 import java.io.Serializable;
 
-
 import org.noticeboard2011.util.StringUtil;
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
 
 import com.google.appengine.api.datastore.Key;
 
+/**
+ * Personモデル
+ * 
+ * @author akiraabe
+ *
+ */
 @Model(schemaVersion = 1)
 public class Person implements Serializable {
 
