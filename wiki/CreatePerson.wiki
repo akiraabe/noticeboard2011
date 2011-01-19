@@ -160,8 +160,8 @@ public class InsertController extends Controller {
 }}}
 
 まず最初に、privateメソッドのvalidate()を呼び出す。<br/>
-ここでエラーがある場合には、もとの画面（create.jsp）に遷移する。<br/>
-エラーが無い場合には、PersonServiceのinsertメソッドを呼び出す。引数はここでは、requestパラメータのMapである。<br/>
-その後に、ルートにリダイレクトしている。
+エラーがある場合には、もとの画面（create.jsp）に遷移する。<br/>
+エラーが無い場合には、PersonServiceのinsertメソッドを呼び出す。引数は、requestパラメータのMapである。<br/>
+その後に、ルート（行き先表示画面）にリダイレクトしている。
 
 === PersonService.java ===
