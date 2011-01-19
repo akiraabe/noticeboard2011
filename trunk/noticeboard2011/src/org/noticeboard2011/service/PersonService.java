@@ -13,14 +13,36 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Transaction;
 
+/**
+ * Personモデルに対するCRUD操作を提供するクラス。
+ * 
+ * @author akiraabe
+ *
+ */
 public class PersonService {
 
     private PersonMeta personMeta = PersonMeta.get();
 
+    /**
+     * キーとバージョン番号を指定して、PersonモデルをDatastoreから読み込む。
+     * @param key
+     * @param version
+     * @return Person
+     */
     public Person get(Key key, Long version) {
         return Datastore.get(personMeta, key, version);
     }
 
+    /**
+     * パラメータに従ってDatastoreから読込み、複数件のPersonをList形式で返却する。
+     * ページング処理を前提としているので、offsetとlimitの指定は必須である。
+     * 
+     * @param offset 取得開始行数（必須であり省略不可）
+     * @param limit 取得する行数（必須であり省略不可）
+     * @param query 検索条件の文字列（firstNameがこの文字列で始まるものが検索対象。空文字の場合には、filterをかけない。）
+     * @param sortorder 並び順（昇順か降順かを示す。空文字の場合は、昇順扱いとする。）
+     * @return Personのリスト
+     */
     public List<Person> getPersonList(int offset, int limit, String query, String sortorder) {
         ModelQuery<Person> modelQuery = 
         Datastore
@@ -28,16 +50,25 @@ public class PersonService {
             .offset(offset)
             .limit(limit);
         if (!"".equals(query)) {
+            // 検索文字列が指定されていたら、filterを追加する
             modelQuery = modelQuery.filter(personMeta.firstName.startsWith(query));
         }
         if ("desc".equals(sortorder)) {
+            // 降順
             modelQuery = modelQuery.sort(personMeta.firstName.desc);
         } else {
+            // 昇順
             modelQuery = modelQuery.sort(personMeta.firstName.asc);
         }
         return modelQuery.asList();
     }
 
+    /**
+     * 検索条件に応じた総件数を返す。
+     * 
+     * @param query
+     * @return 総件数
+     */
     public Integer count(String query) {
         if (!"".equals(query)) {
             return Datastore.query(personMeta).filter(personMeta.firstName.startsWith(query)).count();
@@ -47,6 +78,12 @@ public class PersonService {
         
     }
 
+    /**
+     * 入力値（精査済であることが条件）をDatastoreに永続化する。
+     * 
+     * @param input
+     * @return Person（キー取得済）
+     */
     public Person insert(Map<String, Object> input) {
         Person person = new Person();
         BeanUtil.copy(input, person);
@@ -58,12 +95,24 @@ public class PersonService {
         return person;
     }
 
+    /**
+     * 行き先を更新する。
+     * 
+     * @param id
+     * @param place
+     */
     public void updatePlace(Long id, String place) {
         Person person = Datastore.get(Person.class, KeyFactory.createKey("Person", id));
         person.setPlace(place);
         Datastore.put(person);
     }
 
+    /**
+     * Personの属性（姓名）を更新する。
+     * @param id
+     * @param firstName
+     * @param lastName
+     */
     public void updateProperty(Long id, String firstName, String lastName) {
         Person person = Datastore.get(Person.class, KeyFactory.createKey("Person", id));
         person.setFirstName(firstName);
@@ -71,8 +120,11 @@ public class PersonService {
         Datastore.put(person);
     }
 
+    /**
+     * 全件分の行き先を初期化する。
+     * 早朝に、cronで自動実行することを想定している。
+     */
     public void initialize() {
-        // TODO Auto-generated method stub
         List<Person> list = Datastore.query(personMeta).asList();
         for (Person person : list) {
             person.setPlace("undefined");
