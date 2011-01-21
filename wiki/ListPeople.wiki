@@ -25,6 +25,7 @@
 
 === jQuery UI Dialog ===
 http://jqueryui.com/demos/dialog/
+<br/>
 jQuery UIの紹介記事（技術評論社） http://gihyo.jp/dev/feature/01/jquery-ajax/0005
 === JSON ===
 JSONの紹介 http://www.json.org/json-ja.html
@@ -33,6 +34,18 @@ JSONの紹介 http://www.json.org/json-ja.html
 http://jsonic.sourceforge.jp/
 <br/>
 マイコミジャーナルの紹介記事 http://journal.mycom.co.jp/articles/2008/04/09/jsonic/index.html
+
+== 処理の流れ ==
+  # アクターは、http://noticeboard2011.appspot.com/のURLでシステムにリクエストする。
+    # index.htmlはflexigridによりhtmlのテーブルのDOMオブジェクト(#tabledata)を生成する。
+  # #tabledataは、!IndexControllerへpostする。
+  # !IndexControllerは以下の操作を順に行う。
+    # privateメソッドのgetPersonListを呼び出し、人の一覧を取得する。
+      # PersonServiceのgetPersonListメソッドに委譲する。
+    # privateメソッドのgenerateJsonDataを呼び出し、JSON形式のデータ（ValueObject）を生成する。
+    # Superクラスのjsonメソッドを呼び出し、JSON形式のデータを出力する。
+  # index.htmlのpreProcess()は、サーバサイドから受け取ったJSON形式データを加工し、行き先欄をリストボックス形式に変換する。
+  # index.htmlのpostProcess()は、行き先の背景色を設定する。
 
 == ソースコード ==
 === index.html ===
