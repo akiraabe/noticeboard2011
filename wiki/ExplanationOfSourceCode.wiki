@@ -7,7 +7,6 @@
 
 = 目次 =
 
-以下が構成要素です。
   * PersonModel 人を表すモデル
   * CreatePerson 人の登録
   * ListPeople 行き先表示板表示
