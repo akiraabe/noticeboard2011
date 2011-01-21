@@ -1,5 +1,6 @@
 #summary PersonModelのソースコード説明.
-
+ExplanationOfSourceCode CreatePerson 
+<hr/>
 = PersonModelのソースコード説明 =
 
 行き先表示板アプリは、"Person"（人の情報）をモデルとして保有する。<br/>
@@ -103,3 +104,6 @@ http://sites.google.com/site/slim3documentja/documents/slim3-datastore
 http://sites.google.com/site/slim3documentja/documents/slim3-datastore/defining-data-classes
 <br/>
 http://sites.google.com/site/slim3documentja/documents/slim3-datastore/creating-getting-and-deleting-model#TOC-1
+<br/>
+<hr/>
+ExplanationOfSourceCode CreatePerson 
