@@ -88,7 +88,7 @@ public class UpdateController extends AbstractJsonController {
 }
 
 }}}
-UpdateControllerは、行き先の更新機能と、人の属性（姓名）の更新機能を共有している。<br/>
+!UpdateControllerは、行き先の更新機能と、人の属性（姓名）の更新機能を共有している。<br/>
 この２つは、リクエストパラメータの"command"の内容で区別される。
 commandが"PLACE"の時に、行き先の更新処理を行っている。<br/>
 なお、このコードは可読性が低いので、リファクタリング予定である。
