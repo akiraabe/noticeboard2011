@@ -1,5 +1,7 @@
 #summary PersonModelのソースコード説明.
-ExplanationOfSourceCode CreatePerson 
+コード説明のTOPへ ExplanationOfSourceCode
+<br/>
+次のページへ CreatePerson 
 <hr/>
 = PersonModelのソースコード説明 =
 
@@ -106,4 +108,6 @@ http://sites.google.com/site/slim3documentja/documents/slim3-datastore/defining-
 http://sites.google.com/site/slim3documentja/documents/slim3-datastore/creating-getting-and-deleting-model#TOC-1
 <br/>
 <hr/>
-ExplanationOfSourceCode CreatePerson 
+コード説明のTOPへ ExplanationOfSourceCode
+<br/>
+次のページへ CreatePerson 
