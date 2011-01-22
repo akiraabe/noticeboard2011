@@ -1,13 +1,16 @@
 #summary 第２イテレーションの内容を記述する。
 
-= Introduction =
+= 第２イテレーション =
 
-Add your content here.
+第２イテレーションのゴールは、基本機能の構築とする。
+ここで、GAEを利用した基本機能の構築ノウハウを習得する。
 
 
-= Details =
+= 詳細 =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+以下の機能の構築を行う。
+＜前半＞
+  * personの登録機能
+  * 行き先表示板の表示機能
+＜後半＞
+  * 行き先の更新機能
