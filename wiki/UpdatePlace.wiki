@@ -1,5 +1,10 @@
 #summary 行き先の更新機能
-
+コード説明のTOPへ ExplanationOfSourceCode
+<br/>
+前のページへ ListPeople
+<br/>
+次のページへ UpdateProperty 
+<hr/>
 = 行き先の更新機能の説明 =
 
 ここでは行き先の更新機能について説明する。<br/>
@@ -92,3 +97,9 @@ public class UpdateController extends AbstractJsonController {
 この２つは、リクエストパラメータの"command"の内容で区別される。
 commandが"PLACE"の時に、行き先の更新処理を行っている。<br/>
 なお、このコードは可読性が低いので、リファクタリング予定である。
+<hr/>
+コード説明のTOPへ ExplanationOfSourceCode
+<br/>
+前のページへ ListPeople
+<br/>
+次のページへ UpdateProperty
