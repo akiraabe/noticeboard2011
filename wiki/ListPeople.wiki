@@ -41,6 +41,7 @@ http://jsonic.sourceforge.jp/
 マイコミジャーナルの紹介記事 http://journal.mycom.co.jp/articles/2008/04/09/jsonic/index.html
 
 == 処理の流れ ==
+https://cacoo.com/diagrams/BsUU6L59vT0eFsoc-41E41.png
   # アクターは、http://noticeboard2011.appspot.com/ のURLでシステムにリクエストする。
     # index.htmlはflexigridによりhtmlのテーブルのDOMオブジェクト(#tabledata)を生成する。
   # #tabledataは、!IndexControllerへpostする。
