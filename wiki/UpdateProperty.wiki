@@ -22,7 +22,7 @@ https://cacoo.com/diagrams/BsUU6L59vT0eFsoc-B0A6B.png
   # アクターが「OK」ボタンを押下した場合は、以下の処理を行う。
     # #edit-dialogは、!UpdateControllerのrunメソッドを呼び出す。
       # !UpdateControllerはprivateメソッドのvalidate()を呼び出し、精査を行う。
-      # 精査結果がOK（Valid）の場合には、!PersonServiceのupdatePropertyメソッドに委譲し、Datastoreの更新を行う。
+      # 精査結果がOK（Valid）の場合には、PersonServiceのupdatePropertyメソッドに委譲し、Datastoreの更新を行う。
       # !UpdateControllerは、精査結果をJSON形式のデータとしてindex.htmlへ返却する。
     # #edit-dialogは、#tabledataのflexReload()を呼び出し、行き先表示板をReloadする。
     # #edit-dialogは、close()メソッドを自己呼び出しして、ダイアログを閉じる。
