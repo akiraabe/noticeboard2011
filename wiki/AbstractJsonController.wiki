@@ -3,7 +3,7 @@
 <hr/>
 = !AbstractJsonControllerのソースコード説明 =
 
-!AbstractJsonControllerは、JSON形式のデータを返すコントローラの基底クラスである。尚、Slim3のControllerを継承しjsonメソッドを追加している。<br/>
+!AbstractJsonControllerは、JSON形式のデータを返すコントローラの基底クラスである。Slim3のControllerを継承しjsonメソッドを追加している。<br/>
 逆に言うと、JSON形式のデータを返却したい場合は、Slim3のControllerではなく、AbstractJsonControllerを継承することを前提としている。
 
 {{{
