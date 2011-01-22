@@ -1,9 +1,9 @@
 #summary ResultVo
 コード説明のTOPへ ExplanationOfSourceCode
 <hr/>
-= ResultVoのソースコード説明 =
-ResultVoクラスの責務は、flexigrid（クライアントサイドで使うjQueryのプラグイン）の仕様に合わせたJSONデータ作成やりやすくするというものである。<br/>
-ResultVoはflexigridの仕様に合わせた項目、項目の階層をJavaBeans形式で保持している。<br/>
+= !ResultVoのソースコード説明 =
+!ResultVoクラスの責務は、flexigrid（クライアントサイドで使うjQueryのプラグイン）の仕様に合わせたJSONデータ作成やりやすくするというものである。<br/>
+!ResultVoはflexigridの仕様に合わせた項目、項目の階層を!JavaBeans形式で保持している。<br/>
 これをJSONICに入力することでJSON形式のデータ作成が可能となる。
 
 {{{
@@ -61,5 +61,11 @@ public class ResultVo {
 
 }}}
 
+=== 関連事項 ===
+JsonDataSample
+ JSON形式のデータ
+
 === !ToDo ===
 このクラスは、名前（又はパッケージ）を変更しflexigrid専用であることを明示した方が良いと思われる。
+<hr/>
+コード説明のTOPへ ExplanationOfSourceCode
