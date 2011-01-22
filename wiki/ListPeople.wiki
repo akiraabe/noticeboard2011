@@ -408,6 +408,9 @@ public class IndexController extends AbstractJsonController {
 
 }}}
 
+=== 関連事項 ===
+JsonDataSample JSON形式のデータ
+
 <hr/>
 コード説明のTOPへ ExplanationOfSourceCode
 <br/>
