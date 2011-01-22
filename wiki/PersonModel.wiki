@@ -51,7 +51,14 @@ public class Person implements Serializable {
     private String lastName;
     private String place;
 
-    // この他に、フィールドのsetter,getterなどのメソッドがあるが省略。
+    // View層がjspとは限らないので、サニタイジングが必要なので、
+    // getterでサニタイジングをするようにした。
+    // 以下は、firstNameのgetterの例。
+    public String getFirstName() {
+        return StringUtil.htmlEscape(firstName);
+    }
+
+    // この他にも、フィールドのsetter,getterなどのメソッドがあるが省略。
 
 }
 
