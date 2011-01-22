@@ -75,11 +75,21 @@ http://jsonic.sourceforge.jp/
  * ページのLoad時に呼び出される処理
  */
 $(document).ready(function() {
-	$("#datatable").flexigrid({
-		autoload: true,
-		url: "index",
-		method: "post",
-		dataType: "json",
+	$("#datatable").flexigrid({ // id="datatable"のtableタグに対して、flexigridを適用する
+		autoload: true, // HTML表示時に自動的に読み込みを開始するかどうか。
+		url: "index", // Ajax でリクエストされるURL。XML もしくは JSON 出力
+		method: "post", // 送信メソッド（デフォルトはpost）
+		dataType: "json", // 読み込むデータのタイプ。（json or xml）
+		/*
+		colModel
+			列の設定オブジェクトをもつ配列
+			display：列の表示名
+			name：列のユニークID（テーブルカラム名）必須
+			width：列幅
+			sortable：列のソートを有効にするかどうか
+			align：文字の配置
+			hide：非表示にするかどうか
+		*/
 		colModel: [
 					{display: "id", name : "id", width : 30, sortable : false, align: "center", hide : false},
 					{display: "version", name : "version", width : 50, sortable : false, align: "center", hide : true},
@@ -88,51 +98,67 @@ $(document).ready(function() {
 					{display: "行き先", name : "place", width : 100, sortable : false, align: "center"},
 					{display: "hidden", name : "place2", width : 10, sortable : false, align: "center", hide: true}
 		],
+		/*
+		buttons
+			ヘッダにボタンを表示する際のボタン情報を格納した配列
+			name：ボタン表示文字
+			bclass：ボタンの表示クラス
+			onpress：ボタンを押された際に呼び出されるメソッド
+			separator：セパレータを表示
+		*/
 		buttons : [
 					{name: 'Add', bclass: 'add', onpress : test},
 					{name: 'Edit', bclass: 'edit', onpress : editPressed},
 					{name: 'Delete', bclass: 'delete', onpress : deletePressed},
 					{separator: true}
 		],
+		/*
+		searchitems
+			検索対象となる列の配列
+			display：検索対象を選択するセレクトボックスの表示文字
+			name：列のユニークID（テーブルカラム名）必須
+			isdefault：初期選択されているかどうか。
+		*/
 		searchitems : [  
              {display: 'ファーストネーム', name : 'firstName'}
         ],  
-		usepager: true,
-		title: "noticeboard",
-		useRp: true,
-		rp: 10,
-		rpOptions: [3,5,10,20,30],
-		pagestat: "{from} ～ {to} を表示 (総数: {total} )",
-		procmsg: "しばらくお待ちください……",
-		nomsg: "項目はありません。",
-		showTableToggleBtn: true,
-		singleSelect: true,
-		width: 500,
-		height: "auto",
-		preProcess: preProcess
-		,onSuccess: postProcess
+		usepager: true, // ページャーを使用するかどうか。
+		title: "noticeboard", // テーブルのキャプション。設定するとタイトル行が表示される。
+		useRp: true, // 1ページに表示する行数を変更できるセレクトボックスを表示するかどうか。
+		rp: 10, // 1ページに表示する行数。
+		rpOptions: [3,5,10,20,30], // useRp を有効にした際のセレクトボックス値の配列。
+		pagestat: "{from} ～ {to} を表示 (総数: {total} )", // 現在表示しているページの説明文フォーマット。表示開始行：{from}、表示終了行：{to}、総数：{total}が利用できる。
+		procmsg: "しばらくお待ちください……", // 読み込み中時フッターに表示されるメッセージ。
+		nomsg: "項目はありません。", // 検索データが存在しなかった場合のメッセージ。
+		showTableToggleBtn: true, // テーブルの表示非表示ボタンを設置するかどうか。title に文字が設定されている場合のみ有効。
+		singleSelect: true, // 行の複数選択を可能にするかどうか。
+		width: 500, // テーブルの横幅。数値もしくは auto が利用可能。auto に設定した際は横のリサイズは無効。
+		height: "auto", // テーブルの高さ。数値もしくは auto が利用可能。auto に設定した際は縦のリサイズは無効。
+		preProcess: preProcess // データを受信した直後にデータを成形するため（と思われる）に呼び出される。
+		,onSuccess: postProcess // 表示が成功した際に呼び出されるイベントハンドラメソッド。
 	});
 
 	//リストボックスで値を変更したら、update関数を呼び出す。
 	$("#datatable").change(update);
 
 	//編集ダイアログの準備
-	$("#edit-dialog").dialog({
-		modal:true,
-		autoOpen:false,
-		resizable:false,
-		draggable:true,
+	$("#edit-dialog").dialog({ // id="edit-dialog"のdivタグに対して、dialogを適用する
+		modal:true, // モーダル画面にするかどうか。
+		autoOpen:false, // 自動的にダイアログを開くかどうか。
+		resizable:false, // リサイズを可能とするかどうか。
+		draggable:true, // ドラッグを可能とするかどうか。
 		title:"編集入力",
 		width: 450,
-		show:"scale",
-		hide:"scale",
-		buttons: {
+		show:"scale", // ダイアログを表示するときの効果。
+		hide:"scale", // ダイアログを閉じるときの効果。
+		buttons: { // ボタンの配置と押したときの振る舞いを定義する。
 		"OK": function() {
+			// ダイアログに入力された値を変数に保存
 			var id = $("#id").val();
 			var firstName = $("#firstNameInput").val();
 			var lastName = $("#lastNameInput").val();
 			//alert('id:' + id + ' name:' + firstName + lastName);
-			jQuery.post("person/update",
+			jQuery.post("person/update", // jQueryのajax通信をpostメソッドで行う。引数は、url,data,handler,dataTypeである。
 					{"command":"PROPERTY",
 				     "id":id, 
 				     "firstName":firstName, 
@@ -146,7 +172,7 @@ $(document).ready(function() {
 				    	 $("#datatable").flexReload();
 				     },
 				     'json');
-			$(this).dialog("close");
+			$(this).dialog("close"); // ダイアログを閉じる。
 		},
 		"Cancel": function() {
 			$(this).dialog("close");
@@ -160,20 +186,20 @@ $(document).ready(function() {
  * 行き先の更新処理
  */ 
 function update(e) {
-	var target = $(e.target);
-    var col = target.parents("tr");
-    var cell = col[0].children;
-    var id = $(cell[0]).text();
-    var firstName = $(cell[2]).text();
+	var target = $(e.target); // 更新された対象のオブジェクトを取得
+    var col = target.parents("tr"); // 更新対象オブジェクトの親のtrタグの要素を取得する。（つまりテーブルの更新対象の行を取得したこととなる。）
+    var cell = col[0].children; // 上記の子要素の配列[0]の要素を取得する。
+    var id = $(cell[0]).text(); // 上記の要素の文字列を取得する。（つまり、テーブルのidの値が取得される）
+    var firstName = $(cell[2]).text(); // テーブルの行の配列[2]の要素を取得する。（つまり、ファーストネームが取得される）
     //alert($(cell[2]).text() + 'の行き先を' + target.context.value + 'に変更しました。');
-    jQuery.post("person/update",
+    jQuery.post("person/update", // jQueryのajax通信をpostメソッドで行う。（詳細は前述）
     	    {"command":"PLACE", 
 	         "firstName":firstName,
 	         "id":id,
 	         "place":target.context.value}
 	         );
 
-    // 背景色更新
+    // 背景色更新（更新対象の値に応じて、cssの更新を行い、背景色を更新する）
     switch(target.context.value) {
     case 'Absent':
 		$(e.target).css("background-color","red");
