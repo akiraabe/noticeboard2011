@@ -10,13 +10,12 @@
 行き先表示板出力機能の説明
 
 == 前提知識 ==
-ここでは、以下の要素技術を使っている。
+ここでは、以下の要素技術を使っている。詳細は、後述のURLを参照。
   * jQuery
   * flexigrid(jQuery Plugin)
   * jQuery UI Dialog
   * JSON
   * JSONIC（JSONのパーサ）
-各々についての参考URLを下記する。<br/><br/>
 
 === jQuery ===
 本家 http://jquery.com/
