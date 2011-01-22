@@ -25,6 +25,7 @@ http://sites.google.com/site/slim3documentja/documents/slim3-controller/url-mapp
 Slim3のコントローラはサーブレットの薄いラッパーである。従って、サーブレットによる開発の知識がそのまま適用できる。
 
 == 処理の流れ ==
+https://cacoo.com/diagrams/BsUU6L59vT0eFsoc-FA655.png
   # アクターは、http://noticeboard2011.appspot.com/person/create のURLでシステムにリクエストする。システムは、上記リクエストにより{ルートパッケージ}.controller.person.CreateControllerに制御を移す。
     # CreateControllerは、create.jsp（入力用の画面）を表示する。
   # アクターは、入力用画面に対して必要項目を入力する。
