@@ -1,5 +1,6 @@
 #summary JSON形式のデータサンプル.
-
+コード説明のTOPへ ExplanationOfSourceCode
+<hr/>
 = JSON形式のデータサンプル =
 
 flexigrid用のJSON形式のデータは、以下のような形で、サーバサイドから返却される。
@@ -22,3 +23,6 @@ flexigrid用のJSON形式のデータは、以下のような形で、サーバ�
  "total":17
 }
 }}}
+
+<hr/>
+コード説明のTOPへ ExplanationOfSourceCode
