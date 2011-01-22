@@ -12,3 +12,8 @@
   * ListPeople 行き先表示板表示
   * UpdatePlace 行き先の更新機能
   * UpdateProperty 人の属性の更新機能
+
+  * その他（サービスやユーティリティ類）
+    * PersonService
+    * ResultVo
+    * AbstractJsonController
