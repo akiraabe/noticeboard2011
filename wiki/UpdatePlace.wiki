@@ -12,12 +12,12 @@
 
   # アクターは、http://noticeboard2011.appspot.com/ で表示される「行き先表示板」上で行き先欄のリストを選択（変更）する。
     # index.html（のjavascript）は、リストの変更を検知し、DOMオブジェクト(#tabledata)のchangeイベントを発生させる。
-  # index.htmlはupdate()を呼び出す。
+      # index.htmlはupdate()を呼び出す。
     # index.htmlは、サーバサイドの!UpdateControllerのrunメソッドを呼び出す。（サーバへpostする）
+      # !UpdateControllerは、リクエストパラメータの精査を行う。
+      # !UpdateControllerは、精査がOK（Valid）の場合には、PersonServiceのupdatePlaceメソッドを呼び出し、Datastoreの更新処理を委譲する。
+      # !UpdateControllerは、精査結果をJSON形式のデータとしてindex.htmlへ返却する。
     # index.htmlは、行き先欄の背景色の更新を行う。
-  # !UpdateControllerは、リクエストパラメータの精査を行う。
-  # !UpdateControllerは、精査がOK（Valid）の場合には、PersonServiceのupdatePlaceメソッドを呼び出し、Datastoreの更新処理を委譲する。
-  # !UpdateControllerは、精査結果をJSON形式のデータとしてindex.htmlへ返却する。
 
 
 == ソースコード ==
