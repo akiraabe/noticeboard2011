@@ -1,11 +1,9 @@
 #summary 人の登録機能の説明
 コード説明のTOPへ ExplanationOfSourceCode
-<p>
+<br/>
 前のページへ PersonModel
-</p>
-<p>
+<br/>
 次のページへ ListPeople
-</p>
 <hr/>
 = 人の登録機能の説明 =
 
