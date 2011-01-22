@@ -53,7 +53,7 @@ https://cacoo.com/diagrams/BsUU6L59vT0eFsoc-41E41.png
   # index.htmlのpostProcess()は、行き先の背景色を設定する。
 
 == ソースコード ==
-=== index.html ===
+=== index.html（説明用のコメントを追記してある。） ===
 {{{
 001: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 002: <html xmlns="http://www.w3.org/1999/xhtml">
