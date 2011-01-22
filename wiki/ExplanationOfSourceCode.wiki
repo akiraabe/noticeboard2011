@@ -17,3 +17,4 @@
     * PersonService
     * ResultVo
     * AbstractJsonController
+    * JsonDataSample
