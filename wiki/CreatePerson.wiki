@@ -1,5 +1,10 @@
 #summary 人の登録機能の説明
-
+コード説明のTOPへ ExplanationOfSourceCode
+<br/>
+前のページへ PersonModel 
+<br/>
+次のページへ ListPeople 
+<hr/>
 = 人の登録機能の説明 =
 
 ここでは人の登録機能について説明する。<br/>
@@ -165,3 +170,10 @@ public class InsertController extends Controller {
 その後に、ルート（行き先表示画面）にリダイレクトしている。
 
 === PersonService.java ===
+
+<hr/>
+コード説明のTOPへ ExplanationOfSourceCode
+<br/>
+前のページへ PersonModel 
+<br/>
+次のページへ ListPeople 
