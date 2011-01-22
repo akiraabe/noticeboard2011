@@ -1,13 +1,14 @@
-#summary 第３イテレーション
+#summary 第３イテレーションの内容を記述する。
 
-= Introduction =
+= 第３イテレーション =
 
-何らかの入力。
+第３イテレーションのゴールは、拡張機能の構築とする。
 
+= 詳細 =
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+以下の機能の追加を行う。
+<br/>
+  * personの属性編集機能
+  * personの削除機能
+  * 検索機能
+  * 行き先表示板の初期化（バッチ実行）機能
