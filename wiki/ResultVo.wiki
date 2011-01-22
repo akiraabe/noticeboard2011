@@ -62,8 +62,7 @@ public class ResultVo {
 }}}
 
 === 関連事項 ===
-JsonDataSample
- JSON形式のデータ
+JsonDataSample JSON形式のデータ
 
 === !ToDo ===
 このクラスは、名前（又はパッケージ）を変更しflexigrid専用であることを明示した方が良いと思われる。
