@@ -13,6 +13,8 @@
 特になし。（その他の機能で得られた知識で理解可能）
 
 == 処理の流れ ==
+https://cacoo.com/diagrams/BsUU6L59vT0eFsoc-8B1B1.png
+
 事前条件として、行き先表示板が表示されていること。
 
   # アクターは、http://noticeboard2011.appspot.com/ で表示される「行き先表示板」上で行き先欄のリストを選択（変更）する。
