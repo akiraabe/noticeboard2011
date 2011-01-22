@@ -11,6 +11,7 @@
 特になし。（その他の機能で得られた知識で理解可能）
 
 == 処理の流れ ==
+https://cacoo.com/diagrams/BsUU6L59vT0eFsoc-B0A6B.png
 事前条件として、行き先表示板が表示されていること。
 
   # アクターは、http://noticeboard2011.appspot.com/ で表示される「行き先表示板」の上部にある「Edit」ボタンを押下する。
