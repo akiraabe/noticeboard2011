@@ -1,5 +1,8 @@
 #summary 人の属性の更新機能
-
+コード説明のTOPへ ExplanationOfSourceCode
+<br/>
+前のページへ UpdatePlace
+<hr/>
 = 人の属性の更新機能 の説明 =
 
 ここでは人の属性の更新機能 について説明する。<br/>
@@ -26,4 +29,7 @@
     # #edit-dialogは、close()メソッドを自己呼び出しして、ダイアログを閉じる。
 
 
-== ソースコード ==
+<hr/>
+コード説明のTOPへ ExplanationOfSourceCode
+<br/>
+前のページへ UpdatePlace
