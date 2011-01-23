@@ -17,7 +17,7 @@ import com.google.appengine.api.datastore.Key;
 @Model(schemaVersion = 1)
 public class Person implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3492243894122238997L;
 
     @Attribute(primaryKey = true)
     private Key key;
