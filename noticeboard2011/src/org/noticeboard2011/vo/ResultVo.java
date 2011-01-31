@@ -44,8 +44,8 @@ public class ResultVo {
     public Set getRows() {
         return rows;
     }
-    public void setRows(Set rows) {
-        this.rows = rows;
-    }
+//    public void setRows(Set rows) {
+//        this.rows = rows;
+//    }
 
 }
