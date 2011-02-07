@@ -1,3 +1,4 @@
+<%@page pageEncoding="UTF-8" isELIgnored="false" session="false"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -20,7 +21,7 @@
 $(document).ready(function() {
 	$("#datatable").flexigrid({
 		autoload: true,
-		url: "index",
+		url: "person/list",
 		method: "post",
 		dataType: "json",
 		colModel: [
@@ -29,7 +30,9 @@ $(document).ready(function() {
 					{display: "ファーストネーム", name : "firstName", width : 150, sortable : true, align: "center"},
 					{display: "ラストネーム", name : "lastName", width : 150, sortable : false, align: "center"},
 					{display: "行き先", name : "place", width : 100, sortable : false, align: "center"},
+					{display: "備考欄(Twitter連携)", name : "memo", width : 200, sortable : false, align: "center"},
 					{display: "hidden", name : "place2", width : 10, sortable : false, align: "center", hide: true}
+					
 		],
 		buttons : [
 					{name: 'Add', bclass: 'add', onpress : test},
@@ -50,7 +53,7 @@ $(document).ready(function() {
 		nomsg: "項目はありません。",
 		showTableToggleBtn: true,
 		singleSelect: true,
-		width: 500,
+		width: 720,
 		height: "auto",
 		preProcess: preProcess
 		,onSuccess: postProcess
@@ -188,7 +191,7 @@ var deletePressed = function(command, grid) {
 function preProcess( data ) {
 	$.each (data.rows,
 		function(i, val) {
-			val.cell[5] = val.cell[4];
+			val.cell[6] = val.cell[4];
 			val.cell[4] = '<select id="sel" class="sel"><option value="undef">---</option><option value="Absent">Absent</option><option value="Present">Present</option><option value="Meeting">Meeting</option>';
 		}
 	);
@@ -205,10 +208,10 @@ function postProcess()  {
     var elements  = $(".sel");
     //alert(elements.length);
 	for (var i = 0; i < elements.length ; i++) {
-		//[5]の値を抽出
+		//[6]の値を抽出
 		var col = $(elements[i]).parents("tr");
 		var cell = col[0].children;
-		var param = $(cell[5]).text();
+		var param = $(cell[6]).text();
 		$(elements[i]).val(param);
 		switch(param) {
 		case 'Absent':
@@ -233,6 +236,7 @@ function postProcess()  {
 <table id="datatable" style="display: none"></table>
 <br />
 <a href="person/create">create</a>
+<a href="logout">logout</a>
 <div id="delete-confirm-dialog"></div>
 <div id="edit-dialog">編集内容を入力してください。 <input type="hidden" id="id" />
 <br />

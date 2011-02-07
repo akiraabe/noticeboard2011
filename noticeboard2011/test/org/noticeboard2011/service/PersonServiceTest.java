@@ -217,4 +217,12 @@ public class PersonServiceTest extends AppEngineTestCase {
         assertThat(stored.getLastName(), is("フランクリン"));
         assertThat(stored.getPlace(), is("Absent"));
     }
+    
+    @Test
+    public void parseText() throws Exception {
+        Map<String,String> map = service.parseText("今日は休みです！！！");
+        System.out.println(map.get("place"));
+        System.out.println(map.get("memo"));
+        
+    }
 }
