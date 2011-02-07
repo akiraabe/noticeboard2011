@@ -1,5 +1,6 @@
 package org.noticeboard2011.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +32,15 @@ public class PersonService {
      */
     public Person get(Key key, Long version) {
         return Datastore.get(personMeta, key, version);
+    }
+    
+    /**
+     * idを指定して、PersonモデルをDatastoreから読み込む。
+     * @param id
+     * @return Person
+     */
+    public Person get(Long id) {
+        return Datastore.get(Person.class, KeyFactory.createKey("Person", id));
     }
 
     /**
@@ -87,6 +97,9 @@ public class PersonService {
     public Person insert(Map<String, Object> input) {
         Person person = new Person();
         BeanUtil.copy(input, person);
+        person.setMemo("---");
+        person.setTwitterId("xxxx");
+        person.setMailAddress("yyy");
 
         Transaction tx = Datastore.beginTransaction();
         Datastore.put(tx, person);
@@ -130,5 +143,49 @@ public class PersonService {
             person.setPlace("undefined");
         }
         Datastore.put(list);
+    }
+
+    public void updatePlaceFromTwitter(String senderScreenName, String text) {
+        Person person = Datastore.query(personMeta).filter(personMeta.twitterId.equal(senderScreenName)).asSingle();
+        Map<String,String> map = parseText(text);
+        if (!"".equals(map.get("place"))) {
+            person.setPlace(map.get("place"));
+        }
+        person.setMemo(map.get("memo"));
+        Datastore.put(person);
+    }
+
+    /**
+     * プロトコルに従ってTweetを解析する
+     * @param text
+     * @return map
+     */
+    Map<String, String> parseText(String text) {
+        int length = text.indexOf(" ");
+        if (length == -1) {
+            length = 0;
+        }
+        Map<String, String> map = new HashMap<String, String>();
+        String firstString = text.substring(0,length);
+        if ("Absent".equals(firstString) || "Present".equals(firstString) || "Meeting".equals(firstString)) {
+            map.put("place", firstString);
+            map.put("memo", text.substring(length+1));
+        } else {
+            map.put("place", "");
+            map.put("memo", text);
+        }
+        return map;
+    }
+
+    /**
+     * List all person
+     * @return　List of person
+     */
+    public List<Person> getPersonListAll() {
+        return Datastore.query(personMeta).asList();
+    }
+    
+    public List<Person> findByMailAddress(String mailAddress) {
+        return Datastore.query(personMeta).filter(personMeta.mailAddress.equal(mailAddress)).asList();
     }
 }

@@ -14,7 +14,7 @@ import com.google.appengine.api.datastore.Key;
  * @author akiraabe
  *
  */
-@Model(schemaVersion = 1)
+@Model(schemaVersion = 3)
 public class Person implements Serializable {
 
     private static final long serialVersionUID = 3492243894122238997L;
@@ -28,6 +28,9 @@ public class Person implements Serializable {
     private String firstName;
     private String lastName;
     private String place;
+    private String twitterId;
+    private String memo;
+    private String mailAddress;
 
     /**
      * Returns the key.
@@ -121,4 +124,33 @@ public class Person implements Serializable {
         return StringUtil.htmlEscape(place);
     }
 
+    public void setTwitterId(String twitterId) {
+        this.twitterId = twitterId;
+    }
+
+    public String getTwitterId() {
+        return twitterId;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
+    
+    public String getMemo() {
+        if (memo == null) {
+            return memo;
+        }
+        return StringUtil.htmlEscape(memo);
+    }
+
+    public void setMailAddress(String mailAddress) {
+        this.mailAddress = mailAddress;
+    }
+
+    public String getMailAddress() {
+        if (mailAddress == null) {
+            return mailAddress;
+        }
+        return StringUtil.htmlEscape(mailAddress);
+    }
 }
