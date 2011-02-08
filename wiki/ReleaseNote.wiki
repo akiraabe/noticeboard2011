@@ -1,0 +1,18 @@
+#summary ReleaseNote
+
+= ReleaseNote =
+
+= Release_0.1 =
+
+機能:
+  * 行き先表示板の表示
+   * ページング
+   * !FirstNameでの並べ替え
+  * 検索機能（!FirstNameによる）
+  * 人の追加
+  * 人の属性（名前等）の更新
+  * 行き先の更新
+  * 行き先の初期化（朝4時に自動実行）
+
+対応済みのissue:
+  * 
