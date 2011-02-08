@@ -18,5 +18,5 @@
 <br/>
 （詳細はissueのページを参照）
   * 2 :Personモデル更新時にfirstNameをキーに処理しているが、これでは一意性が保証できない。
-  * 8 :InternetExplorerで正しく稼動しない
+  * 8 :!InternetExplorerで正しく稼動しない
   * 10:IEではテーブルヘッダーが表示されない。
