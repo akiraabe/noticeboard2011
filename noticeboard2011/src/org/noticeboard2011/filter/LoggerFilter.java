@@ -77,7 +77,8 @@ public class LoggerFilter implements Filter {
         if (email.equals("xxxxxxxx@gmail.com")) {
             return false;
         }
-        return true;
+//        return true;
+        return false;
     }
 
     public void init(FilterConfig config) throws ServletException {
