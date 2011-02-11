@@ -20,9 +20,9 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
-public class LoggerFilter implements Filter {
+public class AuthorizeFilter implements Filter {
 
-    static Logger logger = Logger.getLogger(LoggerFilter.class.getName());
+    static Logger logger = Logger.getLogger(AuthorizeFilter.class.getName());
     protected FilterConfig config;
     private ServletContext context;
     private String filterName;
@@ -30,9 +30,9 @@ public class LoggerFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
 
-        // HttpServletRequest取得
+        // HttpServletRequest取得とロギング
         HttpServletRequest req = (HttpServletRequest) request;
-        logger.fine("LoggerFilter start...");
+        logger.fine("AuthorizeFilter start...");
         logger.fine("RemoteHost : " + req.getRemoteHost());
         logger.fine("RequestURL : " + req.getRequestURI());
 
@@ -40,44 +40,38 @@ public class LoggerFilter implements Filter {
         UserService userService = UserServiceFactory.getUserService();
         User user = userService.getCurrentUser();
 
-        // Session情報取得
+        // Sessionから認証情報取得
         HttpSession session = req.getSession(true);
         String auth = (String) session.getAttribute("auth");
-        if (auth != null)
-            logger.fine("auth : " + auth);
 
-        //TODO とんでもないif文だ!!!
-        if (user != null) {
-            logger.fine("user : " + user.getEmail());
-            if (!"/logout".equals(req.getRequestURI())) {
-                if (auth == null) {
-                    if (authrizedUser(user.getEmail())) {
-                        session.setAttribute("auth", user.getEmail());
-                    } else {
-                        RequestDispatcher rd =
-                            request.getRequestDispatcher("/error.jsp");
-                        rd.forward(request, response);
-                        return;
-                    }
-                }
+        // logoutする場合
+        if ("/logout".equals(req.getRequestURI())) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+        // 認証処理
+        if (auth == null) {
+            if (isRegisteredUser(user.getEmail())) {
+                session.setAttribute("auth", user.getEmail());
+            } else {
+                RequestDispatcher rd =
+                    request.getRequestDispatcher("/error.jsp");
+                rd.forward(request, response);
+                return;
             }
         }
+        logger.fine("Registered user : " + user.getEmail());
         chain.doFilter(request, response);
+        return;
     }
 
-    private boolean authrizedUser(String email) {
-
-        // PersonService取得
+    private boolean isRegisteredUser(String email) {
         PersonService service = new PersonService();
         if (service.findByMailAddress(email).size() > 0) {
-            logger.fine("ｗｗｗｗｗｗ");
             return true;
         }
-
-        if (email.equals("xxxxxxxx@gmail.com")) {
-            return false;
-        }
-//        return true;
+        logger.warning("Not Registered user : " + email);
         return false;
     }
 

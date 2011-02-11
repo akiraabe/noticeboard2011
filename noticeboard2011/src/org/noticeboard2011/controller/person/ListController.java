@@ -10,10 +10,6 @@ import org.noticeboard2011.service.PersonService;
 import org.noticeboard2011.vo.ResultVo;
 import org.slim3.controller.Navigation;
 
-import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
-
 public class ListController extends AbstractJsonController {
 
     static Logger logger = Logger.getLogger(ListController.class.getName());
@@ -23,14 +19,8 @@ public class ListController extends AbstractJsonController {
     @Override
     protected Navigation run() throws Exception {
 
-        logger.fine("IndexController#run start.");
+        logger.fine("ListController#run start.");
         
-        // ユーザ情報取得
-        UserService userService = UserServiceFactory.getUserService();
-        User user = userService.getCurrentUser();
-        if (user != null) {
-            logger.fine("user : " + user.getEmail());
-        }
         // requestパラメータの取得
         int page = new Integer(request.getParameter("page"));
         int rp = new Integer(request.getParameter("rp"));

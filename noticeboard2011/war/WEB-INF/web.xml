@@ -16,8 +16,8 @@
 	</context-param>
 	
 	<filter>
-		<filter-name>LoggerFilter</filter-name>
-		<filter-class>org.noticeboard2011.filter.LoggerFilter</filter-class>
+		<filter-name>AuthorizeFilter</filter-name>
+		<filter-class>org.noticeboard2011.filter.AuthorizeFilter</filter-class>
 	</filter>
 	<filter>
 		<filter-name>HotReloadingFilter</filter-name>
@@ -33,8 +33,13 @@
 	</filter>
 
 	<filter-mapping>
-		<filter-name>LoggerFilter</filter-name>
-		<url-pattern>/*</url-pattern>
+		<filter-name>AuthorizeFilter</filter-name>
+		<url-pattern>/</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>AuthorizeFilter</filter-name>
+		<url-pattern>/person/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<filter-mapping>
