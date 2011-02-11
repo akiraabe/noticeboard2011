@@ -9,10 +9,6 @@ import org.noticeboard2011.service.PersonService;
 import org.slim3.controller.Navigation;
 import org.slim3.controller.validator.Validators;
 
-import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
-
 /**
  * {basePath}/update のURLによって呼ばれるコントローラ<br/>
  * <li>入力内容のバリデーションを行う</li>
@@ -30,11 +26,6 @@ public class UpdateController extends AbstractJsonController {
     public Navigation run() throws Exception {
         
         logger.fine("UpdateController#run start.");
-        
-        // ユーザ情報取得
-        UserService userService = UserServiceFactory.getUserService();
-        User user = userService.getCurrentUser();
-        logger.fine("user : " + user.getEmail());
         
         logger.fine("command : " + request.getParameter("command"));
         logger.fine("firstName : " + request.getParameter("firstName"));

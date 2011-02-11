@@ -9,10 +9,6 @@ import org.slim3.controller.Navigation;
 import org.slim3.controller.validator.Validators;
 import org.slim3.util.RequestMap;
 
-import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
-
 /**
  * {basePath}/insert のURLによって呼ばれるコントローラ<br/>
  * <li>入力内容のバリデーションを行う</li>
@@ -30,11 +26,6 @@ public class InsertController extends Controller {
     public Navigation run() throws Exception {
         
         logger.fine("InsertController#run start.");
-        
-        // ユーザ情報取得
-        UserService userService = UserServiceFactory.getUserService();
-        User user = userService.getCurrentUser();
-        logger.fine("user : " + user.getEmail());
         
         if (!validate()) {
             return forward("create.jsp");
