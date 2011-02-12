@@ -1,0 +1,13 @@
+#summary e-mailからの更新
+
+= e-mailからの更新 =
+
+e-mail送信により行き先の更新を行う。<br/>
+GAEアプリはメールの送受信が可能である。<br/>
+今回は、メールの受信機能を用いている。
+
+= 詳細 =
+
+== 機能概要 ==
+
+https://cacoo.com/diagrams/BsUU6L59vT0eFsoc-7344F.png
