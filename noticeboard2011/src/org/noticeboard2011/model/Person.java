@@ -1,6 +1,7 @@
 package org.noticeboard2011.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.noticeboard2011.util.StringUtil;
 import org.slim3.datastore.Attribute;
@@ -14,7 +15,7 @@ import com.google.appengine.api.datastore.Key;
  * @author akiraabe
  *
  */
-@Model(schemaVersion = 3)
+@Model(schemaVersion = 5)
 public class Person implements Serializable {
 
     private static final long serialVersionUID = 3492243894122238997L;
@@ -31,6 +32,10 @@ public class Person implements Serializable {
     private String twitterId;
     private String memo;
     private String mailAddress;
+    private Boolean googleCalendar;
+    private Date updateAt;
+    private String updateBy;
+    private Date expirationDate; //この日時を過ぎるまではGoogleCalendarからのリフレッシュをしない。
 
     /**
      * Returns the key.
@@ -152,5 +157,49 @@ public class Person implements Serializable {
             return mailAddress;
         }
         return StringUtil.htmlEscape(mailAddress);
+    }
+
+    public Boolean isPreparedForGoogleCalendar() {
+        // TODO 暫定的コード
+//        if (this.key.getId() == 25001) {
+//            return true;
+//        }
+//        return false;
+//        if (getGoogleCalendar() == null) {
+//            return false;
+//        }
+        return getGoogleCalendar();
+    }
+
+    public void setGoogleCalendar(Boolean googleCalendar) {
+        this.googleCalendar = googleCalendar;
+    }
+
+    public Boolean getGoogleCalendar() {
+        return googleCalendar;
+    }
+
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
+    }
+
+    public Date getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setExpirationDate(Date expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public Date getExpirationDate() {
+        return expirationDate;
     }
 }

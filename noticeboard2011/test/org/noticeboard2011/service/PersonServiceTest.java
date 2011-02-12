@@ -202,7 +202,7 @@ public class PersonServiceTest extends AppEngineTestCase {
     
     @Test
     public void updatePlace() throws Exception {
-        service.updatePlace(person1.getKey().getId(), "Somewhere");
+        service.updatePlace(person1.getKey().getId(), "Somewhere", "test@gmail.com");
         Person stored = Datastore.get(Person.class, person1.getKey());
         assertThat(stored.getFirstName(), is("James"));
         assertThat(stored.getLastName(), is("Brown"));
