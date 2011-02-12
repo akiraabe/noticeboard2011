@@ -17,4 +17,4 @@ Twitterにはダイレクトメッセージという機能がある。<br/>
 noticeboard2011用の!TwitterIDを取得し、Twitter連携をしたいユーザとフォローしあう形を取る。
 
 == 機能の概念図 ==
-https://cacoo.com/diagrams/BsUU6L59vT0eFsoc
+https://cacoo.com/diagrams/BsUU6L59vT0eFsoc-1922E.png
