@@ -11,10 +11,14 @@ Twitterとの連携方法を説明する。
 TwitterはAPIを公開しているので、連携は比較的容易である。<br/>
 APIの実装は色々あるが、Twitter4Jを使用した。<br/>
 http://twitter4j.org/ja/index.html
-<br/><br/>
+<br/>
 Twitterにはダイレクトメッセージという機能がある。<br/>
 ダイレクトメッセージは双方がフォローしあう必要があるので、安全性が高いと判断した。<br/>
 noticeboard2011用の!TwitterIDを取得し、Twitter連携をしたいユーザとフォローしあう形を取る。
 
 == 機能の概念図 ==
 https://cacoo.com/diagrams/BsUU6L59vT0eFsoc-1922E.png
+
+  * ユーザと@noticeboard2011(!Twitter上のid)は相互にフォローしていることが前提。
+  * ユーザは、@noticeboard2011に対して、ダイレクトメッセージを送る。
+    * メッセージの書式は、[Absent|Present|Meeting] + 半角スペース + 自由記入
