@@ -9,11 +9,11 @@ Twitterとの連携方法を説明する。
 
 == TwitterのAPI利用 ==
 TwitterはAPIを公開しているので、連携は比較的容易である。<br/>
-APIの実装は色々あるが、Twitter4J(http://twitter4j.org/ja/index.html)を使用した。<br/>
-<br/>
+APIの実装は色々あるが、Twitter4Jを使用した。<br/>
+http://twitter4j.org/ja/index.html
+<br/><br/>
 Twitterにはダイレクトメッセージという機能がある。<br/>
 ダイレクトメッセージは双方がフォローしあう必要があるので、安全性が高いと判断した。<br/>
 noticeboard2011用の!TwitterIDを取得し、Twitter連携をしたいユーザとフォローしあう形を取る。
 
 == 機能の概念図 ==
-
