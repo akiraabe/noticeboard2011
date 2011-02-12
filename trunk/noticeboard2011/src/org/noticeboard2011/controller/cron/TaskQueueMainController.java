@@ -12,6 +12,14 @@ import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
 
+/**
+ * TaskQueを生成し処理を呼び出す。
+ * <br/>
+ * GoogleCalendarControllerを呼び出す。
+ * 
+ * @author akiraabe
+ *
+ */
 public class TaskQueueMainController extends Controller {
 
     static Logger logger =
@@ -31,7 +39,7 @@ public class TaskQueueMainController extends Controller {
         
         for (Person person : people) {
             queue.add(TaskOptions.Builder
-                .withUrl("/cron/taskQueueSub")
+                .withUrl("/cron/retrieveGoogleCalendar")
                 .param("id", new Long(person.getKey().getId()).toString()));
             logger.fine("submitted a task for id " + new Long(person.getKey().getId()).toString());
         }

@@ -1,5 +1,6 @@
 package org.noticeboard2011.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,7 @@ import com.google.appengine.api.datastore.Transaction;
  * Personモデルに対するCRUD操作を提供するクラス。
  * 
  * @author akiraabe
- *
+ * 
  */
 public class PersonService {
 
@@ -26,6 +27,7 @@ public class PersonService {
 
     /**
      * キーとバージョン番号を指定して、PersonモデルをDatastoreから読み込む。
+     * 
      * @param key
      * @param version
      * @return Person
@@ -33,9 +35,10 @@ public class PersonService {
     public Person get(Key key, Long version) {
         return Datastore.get(personMeta, key, version);
     }
-    
+
     /**
      * idを指定して、PersonモデルをDatastoreから読み込む。
+     * 
      * @param id
      * @return Person
      */
@@ -47,21 +50,24 @@ public class PersonService {
      * パラメータに従ってDatastoreから読込み、複数件のPersonをList形式で返却する。
      * ページング処理を前提としているので、offsetとlimitの指定は必須である。
      * 
-     * @param offset 取得開始行数（必須であり省略不可）
-     * @param limit 取得する行数（必須であり省略不可）
-     * @param query 検索条件の文字列（firstNameがこの文字列で始まるものが検索対象。空文字の場合には、filterをかけない。）
-     * @param sortorder 並び順（昇順か降順かを示す。空文字の場合は、昇順扱いとする。）
+     * @param offset
+     *            取得開始行数（必須であり省略不可）
+     * @param limit
+     *            取得する行数（必須であり省略不可）
+     * @param query
+     *            検索条件の文字列（firstNameがこの文字列で始まるものが検索対象。空文字の場合には、filterをかけない。）
+     * @param sortorder
+     *            並び順（昇順か降順かを示す。空文字の場合は、昇順扱いとする。）
      * @return Personのリスト
      */
-    public List<Person> getPersonList(int offset, int limit, String query, String sortorder) {
-        ModelQuery<Person> modelQuery = 
-        Datastore
-            .query(personMeta)
-            .offset(offset)
-            .limit(limit);
+    public List<Person> getPersonList(int offset, int limit, String query,
+            String sortorder) {
+        ModelQuery<Person> modelQuery =
+            Datastore.query(personMeta).offset(offset).limit(limit);
         if (!"".equals(query)) {
             // 検索文字列が指定されていたら、filterを追加する
-            modelQuery = modelQuery.filter(personMeta.firstName.startsWith(query));
+            modelQuery =
+                modelQuery.filter(personMeta.firstName.startsWith(query));
         }
         if ("desc".equals(sortorder)) {
             // 降順
@@ -81,11 +87,12 @@ public class PersonService {
      */
     public Integer count(String query) {
         if (!"".equals(query)) {
-            return Datastore.query(personMeta).filter(personMeta.firstName.startsWith(query)).count();
+            return Datastore.query(personMeta).filter(
+                personMeta.firstName.startsWith(query)).count();
         } else {
             return Datastore.query(personMeta).count();
         }
-        
+
     }
 
     /**
@@ -114,28 +121,32 @@ public class PersonService {
      * @param id
      * @param place
      */
-    public void updatePlace(Long id, String place) {
-        Person person = Datastore.get(Person.class, KeyFactory.createKey("Person", id));
+    public void updatePlace(Long id, String place, String user) {
+        Person person =
+            Datastore.get(Person.class, KeyFactory.createKey("Person", id));
         person.setPlace(place);
+        person.setUpdateBy(user);
+        person.setUpdateAt(new Date());
         Datastore.put(person);
     }
 
     /**
      * Personの属性（姓名）を更新する。
+     * 
      * @param id
      * @param firstName
      * @param lastName
      */
     public void updateProperty(Long id, String firstName, String lastName) {
-        Person person = Datastore.get(Person.class, KeyFactory.createKey("Person", id));
+        Person person =
+            Datastore.get(Person.class, KeyFactory.createKey("Person", id));
         person.setFirstName(firstName);
         person.setLastName(lastName);
         Datastore.put(person);
     }
 
     /**
-     * 全件分の行き先を初期化する。
-     * 早朝に、cronで自動実行することを想定している。
+     * 全件分の行き先を初期化する。 早朝に、cronで自動実行することを想定している。
      */
     public void initialize() {
         List<Person> list = Datastore.query(personMeta).asList();
@@ -146,8 +157,10 @@ public class PersonService {
     }
 
     public void updatePlaceFromTwitter(String senderScreenName, String text) {
-        Person person = Datastore.query(personMeta).filter(personMeta.twitterId.equal(senderScreenName)).asSingle();
-        Map<String,String> map = parseText(text);
+        Person person =
+            Datastore.query(personMeta).filter(
+                personMeta.twitterId.equal(senderScreenName)).asSingle();
+        Map<String, String> map = parseText(text);
         if (!"".equals(map.get("place"))) {
             person.setPlace(map.get("place"));
         }
@@ -157,6 +170,7 @@ public class PersonService {
 
     /**
      * プロトコルに従ってTweetを解析する
+     * 
      * @param text
      * @return map
      */
@@ -166,10 +180,12 @@ public class PersonService {
             length = 0;
         }
         Map<String, String> map = new HashMap<String, String>();
-        String firstString = text.substring(0,length);
-        if ("Absent".equals(firstString) || "Present".equals(firstString) || "Meeting".equals(firstString)) {
+        String firstString = text.substring(0, length);
+        if ("Absent".equals(firstString)
+            || "Present".equals(firstString)
+            || "Meeting".equals(firstString)) {
             map.put("place", firstString);
-            map.put("memo", text.substring(length+1));
+            map.put("memo", text.substring(length + 1));
         } else {
             map.put("place", "");
             map.put("memo", text);
@@ -179,13 +195,29 @@ public class PersonService {
 
     /**
      * List all person
+     * 
      * @return　List of person
      */
     public List<Person> getPersonListAll() {
         return Datastore.query(personMeta).asList();
     }
-    
+
     public List<Person> findByMailAddress(String mailAddress) {
-        return Datastore.query(personMeta).filter(personMeta.mailAddress.equal(mailAddress)).asList();
+        return Datastore.query(personMeta).filter(
+            personMeta.mailAddress.equal(mailAddress)).asList();
+    }
+
+    public void updateFromGoogleCalendar(String senderScreenName, String text,
+            Date expirationDate) {
+        Person person =
+            Datastore.query(personMeta).filter(
+                personMeta.twitterId.equal(senderScreenName)).asSingle();
+        Map<String, String> map = parseText(text);
+        if (!"".equals(map.get("place"))) {
+            person.setPlace(map.get("place"));
+        }
+        person.setMemo(map.get("memo"));
+        person.setExpirationDate(expirationDate);
+        Datastore.put(person);
     }
 }

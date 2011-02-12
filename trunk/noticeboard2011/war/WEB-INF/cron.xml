@@ -11,11 +11,20 @@
     <description>Get Twitter direceMessage.</description>
     <schedule>every 3 minutes</schedule>
   </cron>
+  <!-- tasukQueueMainから呼ぶようにした。  
+  <cron>
+    <url>/cron/retrieveGoogleCalendar</url>
+    <description>Retrieve GoogleCalendar.</description>
+    <schedule>every 3 minutes</schedule>
+  </cron>
+  -->
   <cron>
     <url>/cron/taskQueueMain</url>
     <description>Test for TaskQueue.</description>
-    <!--  <schedule>every 30 minutes</schedule> -->
+    <schedule>every 3 minutes</schedule>
+    <!--  
     <schedule>every day 03:00</schedule>
     <timezone>Asia/Tokyo</timezone>
+    -->
   </cron>
 </cronentries>

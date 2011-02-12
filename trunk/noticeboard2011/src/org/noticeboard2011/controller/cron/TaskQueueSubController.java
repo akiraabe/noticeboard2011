@@ -7,12 +7,24 @@ import org.noticeboard2011.service.PersonService;
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 
+/**
+ * タスクキュー実験用のクラス。
+ * （現在未使用なので、近いうちに削除）
+ * @author akiraabe
+ */
 public class TaskQueueSubController extends Controller {
 
     static Logger logger =
         Logger.getLogger(TaskQueueSubController.class.getName());
     private PersonService personService = new PersonService();
 
+    /**
+     * Personモデルの主要項目をログに表示する。
+     * 
+     * @throws Exception idでgetできなかった時に例外を返す。
+     * 可能性としては、mainからタスクキューで実行される間にデータが削除されたケースを想定。
+     * （例外をcatchしておかないとタスクが無限ループしてしまう）
+     */
     @Override
     public Navigation run() throws Exception {
 
