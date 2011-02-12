@@ -1,0 +1,13 @@
+#summary Googleカレンダー連携
+
+= Googleカレンダー連携 =
+
+Googleカレンダーに登録してある情報を自動的にチェックし、行き先の更新を行う。
+
+= 詳細 =
+
+カレンダーをまめに入力している人にとっては、noticeboard2011への転記は無駄な作業である。<br/>
+従って、Googleカレンダーの内容を自動的に、行き先に反映する機能を開発した。
+
+== 機能概要 ==
+https://cacoo.com/diagrams/BsUU6L59vT0eFsoc-F7163.png
