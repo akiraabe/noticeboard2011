@@ -22,3 +22,4 @@ https://cacoo.com/diagrams/BsUU6L59vT0eFsoc-1922E.png
   * ユーザと@noticeboard2011(!Twitter上のid)は相互にフォローしていることが前提。
   * ユーザは、@noticeboard2011に対して、ダイレクトメッセージを送る。
     * メッセージの書式は、[Absent|Present|Meeting] + 半角スペース + 自由記入
+  * noticeboard2011のGAEアプリは定期的に、Twitterに対して自分宛のダイレクトメッセージをポーリングし、新しいメッセージが届いていたら、その内容に応じてボードを更新する。
