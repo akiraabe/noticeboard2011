@@ -14,7 +14,7 @@ http://twitter4j.org/ja/index.html
 <br/>
 Twitterにはダイレクトメッセージという機能がある。<br/>
 ダイレクトメッセージは双方がフォローしあう必要があるので、安全性が高いと判断した。<br/>
-noticeboard2011用の!TwitterIDを取得し、Twitter連携をしたいユーザとフォローしあう形を取る。
+noticeboard2011用のTwitterIDを取得し、Twitter連携をしたいユーザとフォローしあう形を取る。
 
 == 機能の概念図 ==
 https://cacoo.com/diagrams/BsUU6L59vT0eFsoc-1922E.png
