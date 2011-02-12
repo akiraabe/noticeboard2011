@@ -7,6 +7,6 @@ noticeboard2011はさまざまなWebサービスをマッシュアップして�
 
 = 詳細 =
 
-  * Twitter連携 MashupTwitter
-  * e-mailからの更新 MashupMail
-  * Googleカレンダー連携 MashupGoogleCalendar
+  * Twitter連携   MashupTwitter
+  * e-mailからの更新   MashupMail
+  * Googleカレンダー連携   MashupGoogleCalendar
