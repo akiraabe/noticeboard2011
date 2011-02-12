@@ -7,15 +7,6 @@ Twitterとの連携方法を説明する。
 
 = 詳細 =
 
-== TwitterのAPI利用 ==
-TwitterはAPIを公開しているので、連携は比較的容易である。<br/>
-APIの実装は色々あるが、Twitter4Jを使用した。<br/>
-http://twitter4j.org/ja/index.html
-<br/>
-Twitterにはダイレクトメッセージという機能がある。<br/>
-ダイレクトメッセージは双方がフォローしあう必要があるので、安全性が高いと判断した。<br/>
-noticeboard2011用のTwitterIDを取得し、Twitter連携をしたいユーザとフォローしあう形を取る。
-
 == 機能の概念図 ==
 https://cacoo.com/diagrams/BsUU6L59vT0eFsoc-1922E.png
 
@@ -23,3 +14,8 @@ https://cacoo.com/diagrams/BsUU6L59vT0eFsoc-1922E.png
   * ユーザは、@noticeboard2011に対して、ダイレクトメッセージを送る。
     * メッセージの書式は、[Absent|Present|Meeting] + 半角スペース + 自由記入
   * noticeboard2011のGAEアプリは、Twitterに対して自分宛のダイレクトメッセージをポーリングし、新しいメッセージが届いていたら、その内容に応じてボードを更新する。
+
+== TwitterのAPI利用 ==
+TwitterはAPIを公開しているので、連携は比較的容易である。<br/>
+APIの実装は色々あるが、Twitter4Jを使用した。<br/>
+http://twitter4j.org/ja/index.html
