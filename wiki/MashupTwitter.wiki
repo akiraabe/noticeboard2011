@@ -19,3 +19,49 @@ https://cacoo.com/diagrams/BsUU6L59vT0eFsoc-1922E.png
 TwitterはAPIを公開しているので、連携は比較的容易である。<br/>
 APIの実装は色々あるが、Twitter4Jを使用した。<br/>
 http://twitter4j.org/ja/index.html
+
+== ソースコード説明 ==
+Twitter連携は以下のようにシンプルな処理である。
+<br/>
+（ソースコード中に認証情報をハードコーディングしている関係上、svnにはupしていない。）
+{{{
+package org.noticeboard2011.controller.cron;
+
+//import文は省略
+
+public class GetDirectMessagesController extends Controller {
+    static Logger logger =
+        Logger.getLogger(GetDirectMessagesController.class.getName());
+    private PersonService personService = new PersonService();
+
+    static String consumerKey = "????????";
+    static String consumerSecret = "????????";
+
+    static String accessToken =
+        "????????";
+    static String accessTokenSecret =
+        "????????";
+
+    @Override
+    public Navigation run() throws Exception {
+
+        logger.fine("GetDirectMessagesController start...");
+        
+        // Twitter連携
+        TwitterFactory TwitterFactory = new TwitterFactory();
+        Twitter twitter = TwitterFactory.getOAuthAuthorizedInstance(consumerKey, consumerSecret, new AccessToken(accessToken, accessTokenSecret));
+        
+        List<DirectMessage> directMessages =twitter.getDirectMessages();
+        
+        for (DirectMessage directMessage : directMessages) {
+            logger.fine("senderScreenName : " + directMessage.getSenderScreenName());
+            logger.fine("id     : " + directMessage.getId());
+            logger.fine("text   : " + directMessage.getText());
+            personService.updatePlaceFromTwitter(directMessage.getSenderScreenName(),directMessage.getText());
+            twitter.destroyDirectMessage(directMessage.getId());
+        }
+        
+        return null;
+    }
+}
+}}}
