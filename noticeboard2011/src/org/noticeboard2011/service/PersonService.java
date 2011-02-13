@@ -207,8 +207,15 @@ public class PersonService {
             personMeta.mailAddress.equal(mailAddress)).asList();
     }
 
+    /**
+     * Googleカレンダーから取得したデータによる更新処理
+     * @param senderScreenName
+     * @param text
+     * @param expirationDate
+     * @param 今Googleカレンダーにイベントがあるか否か
+     */
     public void updateFromGoogleCalendar(String senderScreenName, String text,
-            Date expirationDate) {
+            Date expirationDate, Boolean eventNow) {
         Person person =
             Datastore.query(personMeta).filter(
                 personMeta.twitterId.equal(senderScreenName)).asSingle();
@@ -218,6 +225,7 @@ public class PersonService {
         }
         person.setMemo(map.get("memo"));
         person.setExpirationDate(expirationDate);
+        person.setEventNow(eventNow);
         Datastore.put(person);
     }
 }
