@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+  <cron>
+    <url>/cron/initialize</url>
+    <description>Initialize every day 04:00</description>
+    <schedule>every day 04:00</schedule>
+    <timezone>Asia/Tokyo</timezone>
+  </cron>
+  <cron>
+    <url>/cron/getDirectMessages</url>
+    <description>Get Twitter direceMessage.</description>
+    <schedule>every 3 minutes</schedule>
+  </cron>
+  <!-- tasukQueueMainから呼ぶようにした。  
+  <cron>
+    <url>/cron/retrieveGoogleCalendar</url>
+    <description>Retrieve GoogleCalendar.</description>
+    <schedule>every 3 minutes</schedule>
+  </cron>
+  -->
+  <cron>
+    <url>/cron/taskQueueMain</url>
+    <description>Test for TaskQueue.</description>
+    <schedule>every 3 minutes</schedule>
+    <!--  
+    <schedule>every day 03:00</schedule>
+    <timezone>Asia/Tokyo</timezone>
+    -->
+  </cron>
+</cronentries>
