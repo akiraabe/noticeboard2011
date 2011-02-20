@@ -121,10 +121,14 @@ public class PersonService {
      * @param id
      * @param place
      */
-    public void updatePlace(Long id, String place, String user) {
+    public void updatePlace(Long id, String key, String value, String user) {
         Person person =
             Datastore.get(Person.class, KeyFactory.createKey("Person", id));
-        person.setPlace(place);
+        if (key.equals("sel")) {
+            person.setPlace(value);
+        } else {
+            person.setMemo(value);
+        }
         person.setUpdateBy(user);
         person.setUpdateAt(new Date());
         Datastore.put(person);
@@ -183,7 +187,8 @@ public class PersonService {
         String firstString = text.substring(0, length);
         if ("Absent".equals(firstString)
             || "Present".equals(firstString)
-            || "Meeting".equals(firstString)) {
+            || "Meeting".equals(firstString)
+            || "undefined".equals(firstString)) {
             map.put("place", firstString);
             map.put("memo", text.substring(length + 1));
         } else {
