@@ -33,7 +33,8 @@ public class UpdateController extends AbstractJsonController {
         logger.fine("firstName : " + request.getParameter("firstName"));
         logger.fine("lastName : " + request.getParameter("lastName"));
         logger.fine("id : " + request.getParameter("id"));
-        logger.fine("place : " + request.getParameter("place"));
+        logger.fine("key : " + request.getParameter("key"));
+        logger.fine("value : " + request.getParameter("value"));
 
         Map<String, String> map = new HashMap<String, String>();
         if (!validate() && "PROPERTY".equals(request.getParameter("command"))) {
@@ -53,7 +54,8 @@ public class UpdateController extends AbstractJsonController {
 
             personService.updatePlace(
                 new Long(request.getParameter("id")),
-                request.getParameter("place"),
+                request.getParameter("key"),
+                request.getParameter("value"),
                 user.getEmail());
         }
 

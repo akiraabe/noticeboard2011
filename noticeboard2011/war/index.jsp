@@ -1,4 +1,7 @@
 <%@page pageEncoding="UTF-8" isELIgnored="false" session="false"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib prefix="f" uri="http://www.slim3.org/functions"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -30,12 +33,12 @@ $(document).ready(function() {
 					{display: "ファーストネーム", name : "firstName", width : 150, sortable : true, align: "center"},
 					{display: "ラストネーム", name : "lastName", width : 150, sortable : false, align: "center"},
 					{display: "行き先", name : "place", width : 100, sortable : false, align: "center"},
-					{display: "備考欄(Twitter連携)", name : "memo", width : 200, sortable : false, align: "center"},
+					{display: "備考欄", name : "memo", width : 225, sortable : false, align: "center"},
 					{display: "hidden", name : "place2", width : 10, sortable : false, align: "center", hide: true}
 					
 		],
 		buttons : [
-					{name: 'Add', bclass: 'add', onpress : test},
+					{name: 'Add', bclass: 'add', onpress : addPressed},
 					{name: 'Edit', bclass: 'edit', onpress : editPressed},
 					{name: 'Delete', bclass: 'delete', onpress : deletePressed},
 					{separator: true}
@@ -53,7 +56,7 @@ $(document).ready(function() {
 		nomsg: "項目はありません。",
 		showTableToggleBtn: true,
 		singleSelect: true,
-		width: 720,
+		width: 750,
 		height: "auto",
 		preProcess: preProcess
 		,onSuccess: postProcess
@@ -111,12 +114,14 @@ function update(e) {
     var cell = col[0].children;
     var id = $(cell[0]).text();
     var firstName = $(cell[2]).text();
-    //alert($(cell[2]).text() + 'の行き先を' + target.context.value + 'に変更しました。');
+    //alert($(cell[2]).text() + 'の' + target.context.id + 'を' + target.context.value + 'に変更しました。');
+    //
     jQuery.post("person/update",
     	    {"command":"PLACE", 
 	         "firstName":firstName,
 	         "id":id,
-	         "place":target.context.value}
+	         "key":target.context.id,
+	         "value":target.context.value}
 	         );
 
     // 背景色更新
@@ -132,9 +137,11 @@ function update(e) {
 	}
 }
 
-function test() {
-	alert('未実装です！');
-	$.get('person/create');
+/**
+ * 追加ボタンが押されたときの処理
+ */
+function addPressed() {
+	location.href = "person/create";
 }
 
 /*
@@ -193,6 +200,7 @@ function preProcess( data ) {
 		function(i, val) {
 			val.cell[6] = val.cell[4];
 			val.cell[4] = '<select id="sel" class="sel"><option value="undef">---</option><option value="Absent">Absent</option><option value="Present">Present</option><option value="Meeting">Meeting</option>';
+			val.cell[5] = '<input id="inputfield" type="text name="memo" value="' + val.cell[5] + '" size="30" maxlength="50" />'
 		}
 	);
 	return data;
@@ -230,13 +238,17 @@ function postProcess()  {
 </script>
 </head>
 <body>
+<div align="right">
+<b>${f:h(email)}</b>
+
+<a href="logout"> logout</a>
+</div>
+<hr/>
 <p>
 <h3>noticeboard2011</h3>
 </p>
 <table id="datatable" style="display: none"></table>
 <br />
-<a href="person/create">create</a>
-<a href="logout">logout</a>
 <div id="delete-confirm-dialog"></div>
 <div id="edit-dialog">編集内容を入力してください。 <input type="hidden" id="id" />
 <br />

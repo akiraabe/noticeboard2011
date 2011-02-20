@@ -13,9 +13,9 @@ import com.google.appengine.api.datastore.Key;
  * Personモデル
  * 
  * @author akiraabe
- *
+ * 
  */
-@Model(schemaVersion = 6)
+@Model(schemaVersion = 7)
 public class Person implements Serializable {
 
     private static final long serialVersionUID = 3492243894122238997L;
@@ -25,7 +25,7 @@ public class Person implements Serializable {
 
     @Attribute(version = true)
     private Long version;
-    
+
     private String firstName;
     private String lastName;
     private String place;
@@ -35,12 +35,13 @@ public class Person implements Serializable {
     private Boolean googleCalendar;
     private Date updateAt;
     private String updateBy;
-    private Date expirationDate; //この日時を過ぎるまではGoogleCalendarからのリフレッシュをしない。
+    private Date expirationDate; // この日時を過ぎるまではGoogleCalendarからのリフレッシュをしない。
     private Boolean eventNow; // 現在Googleカレンダーにイベントがあるか？
+    private String calendarId;
 
     /**
      * Returns the key.
-     *
+     * 
      * @return the key
      */
     public Key getKey() {
@@ -49,7 +50,7 @@ public class Person implements Serializable {
 
     /**
      * Sets the key.
-     *
+     * 
      * @param key
      *            the key
      */
@@ -59,7 +60,7 @@ public class Person implements Serializable {
 
     /**
      * Returns the version.
-     *
+     * 
      * @return the version
      */
     public Long getVersion() {
@@ -68,7 +69,7 @@ public class Person implements Serializable {
 
     /**
      * Sets the version.
-     *
+     * 
      * @param version
      *            the version
      */
@@ -141,7 +142,7 @@ public class Person implements Serializable {
     public void setMemo(String memo) {
         this.memo = memo;
     }
-    
+
     public String getMemo() {
         if (memo == null) {
             return memo;
@@ -199,12 +200,24 @@ public class Person implements Serializable {
     public void setEventNow(Boolean eventNow) {
         this.eventNow = eventNow;
     }
-    
+
     public Boolean getEventNow() {
         return eventNow;
     }
 
     public boolean hasEventNow() {
         return eventNow;
+    }
+
+    public void setCalendarId(String calendarId) {
+        this.calendarId = calendarId;
+    }
+
+    public String getCalendarId() {
+        if (this.calendarId != null && this.calendarId.length() > 0) {
+            return calendarId;
+        } else {
+            return this.mailAddress;
+        }
     }
 }
