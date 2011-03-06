@@ -39,6 +39,7 @@ public class InsertController extends Controller {
         v.add("firstName", v.required());
         v.add("lastName", v.required());
         v.add("place", v.required());
+        v.add("group", v.required());
         return v.validate();
     }
 }

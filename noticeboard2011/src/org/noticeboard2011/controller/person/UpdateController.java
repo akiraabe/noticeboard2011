@@ -52,11 +52,17 @@ public class UpdateController extends AbstractJsonController {
             UserService userService = UserServiceFactory.getUserService();
             User user = userService.getCurrentUser();
 
+            String email = null;
+            if (user != null) {
+                email = user.getEmail();
+            } else {
+                email = "anonymouse";
+            }
             personService.updatePlace(
                 new Long(request.getParameter("id")),
                 request.getParameter("key"),
                 request.getParameter("value"),
-                user.getEmail());
+                email);
         }
 
         if ("PROPERTY".equals(request.getParameter("command"))) {

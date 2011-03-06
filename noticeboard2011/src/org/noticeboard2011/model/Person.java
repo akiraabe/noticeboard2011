@@ -15,7 +15,7 @@ import com.google.appengine.api.datastore.Key;
  * @author akiraabe
  * 
  */
-@Model(schemaVersion = 7)
+@Model(schemaVersion = 8)
 public class Person implements Serializable {
 
     private static final long serialVersionUID = 3492243894122238997L;
@@ -38,6 +38,7 @@ public class Person implements Serializable {
     private Date expirationDate; // この日時を過ぎるまではGoogleCalendarからのリフレッシュをしない。
     private Boolean eventNow; // 現在Googleカレンダーにイベントがあるか？
     private String calendarId;
+    private String group;
 
     /**
      * Returns the key.
@@ -219,5 +220,13 @@ public class Person implements Serializable {
         } else {
             return this.mailAddress;
         }
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    public String getGroup() {
+        return group;
     }
 }
