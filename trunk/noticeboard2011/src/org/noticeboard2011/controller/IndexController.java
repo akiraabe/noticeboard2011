@@ -2,6 +2,7 @@ package org.noticeboard2011.controller;
 
 import java.util.logging.Logger;
 
+import org.noticeboard2011.service.GroupService;
 import org.slim3.controller.Navigation;
 
 import com.google.appengine.api.users.User;
@@ -19,7 +20,14 @@ public class IndexController extends AbstractJsonController {
         
         UserService userService = UserServiceFactory.getUserService();
         User user = userService.getCurrentUser();
-        requestScope("email", user.getEmail());
+        if (user != null) {
+            requestScope("email", user.getEmail());
+        } else {
+            requestScope("email", "anonymouse");
+        }
+        
+        GroupService service = new GroupService();
+        requestScope("groups", service.findAll());
 
         return forward("index.jsp");
     }

@@ -22,6 +22,7 @@
  * ページのLoad時に呼び出される処理
  */
 $(document).ready(function() {
+	//flexigridによる表の作成
 	$("#datatable").flexigrid({
 		autoload: true,
 		url: "person/list",
@@ -34,7 +35,10 @@ $(document).ready(function() {
 					{display: "ラストネーム", name : "lastName", width : 150, sortable : false, align: "center"},
 					{display: "行き先", name : "place", width : 100, sortable : false, align: "center"},
 					{display: "備考欄", name : "memo", width : 225, sortable : false, align: "center"},
-					{display: "hidden", name : "place2", width : 10, sortable : false, align: "center", hide: true}
+					{display: "hidden", name : "place2", width : 10, sortable : false, align: "center", hide: true},
+					{display: "グループ", name : "group", width : 150, sortable : true, align: "center"},
+					{display: "hiddenGroup", name : "hiddenGroup", width : 10, sortable : false, align: "center", hide: true}
+					
 					
 		],
 		buttons : [
@@ -56,7 +60,7 @@ $(document).ready(function() {
 		nomsg: "項目はありません。",
 		showTableToggleBtn: true,
 		singleSelect: true,
-		width: 750,
+		width: 950,
 		height: "auto",
 		preProcess: preProcess
 		,onSuccess: postProcess
@@ -198,9 +202,15 @@ var deletePressed = function(command, grid) {
 function preProcess( data ) {
 	$.each (data.rows,
 		function(i, val) {
+			var list = '<select id="sel2" class="sel2">';
+			<c:forEach var="e" items="${groups}">
+			    list = list + '<option value="${f:h(e.name)}">${f:h(e.name)}</option>';
+			</c:forEach>
+			val.cell[8] = val.cell[6];
 			val.cell[6] = val.cell[4];
 			val.cell[4] = '<select id="sel" class="sel"><option value="undef">---</option><option value="Absent">Absent</option><option value="Present">Present</option><option value="Meeting">Meeting</option>';
 			val.cell[5] = '<input id="inputfield" type="text name="memo" value="' + val.cell[5] + '" size="30" maxlength="50" />'
+			val.cell[7] = list;
 		}
 	);
 	return data;
@@ -210,7 +220,7 @@ function preProcess( data ) {
  * flexigridの表が表示された後の処理
  */
 function postProcess()  {
-
+	
 	// 行き先の背景色を設定する
     //var elements  = document.getElementsByClassName("drop");
     var elements  = $(".sel");
@@ -231,6 +241,18 @@ function postProcess()  {
 		case 'Meeting':
 			$(elements[i]).css("background-color","pink");
 		}
+	}
+
+	// グループの選択値の設定をする
+    //var elements  = document.getElementsByClassName("drop");
+    var elements  = $(".sel2");
+    //alert(elements.length);
+	for (var i = 0; i < elements.length ; i++) {
+		//[8]の値を抽出
+		var col = $(elements[i]).parents("tr");
+		var cell = col[0].children;
+		var param = $(cell[8]).text();
+		$(elements[i]).val(param);
 	}
 }
 

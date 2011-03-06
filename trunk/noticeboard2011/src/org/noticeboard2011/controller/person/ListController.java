@@ -61,13 +61,14 @@ public class ListController extends AbstractJsonController {
         List array = new ArrayList();
 
         for (Person person : people) {
-            String[] strArray = new String[6];
+            String[] strArray = new String[7];
             strArray[0] = new Long(person.getKey().getId()).toString();
             strArray[1] = person.getVersion().toString();
             strArray[2] = person.getFirstName();
             strArray[3] = person.getLastName();
             strArray[4] = person.getPlace();
             strArray[5] = person.getMemo();
+            strArray[6] = person.getGroup();
             array.add(strArray);
         }
 
