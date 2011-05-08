@@ -114,6 +114,16 @@ public class PersonService {
 
         return person;
     }
+    
+    /**
+     * Personを一件削除する。
+     * 
+     * @param id
+     */
+    public void delete(Long id) {
+        Person person = Datastore.get(Person.class, KeyFactory.createKey("Person", id));
+        Datastore.delete(person.getKey());
+    }
 
     /**
      * 行き先を更新する。

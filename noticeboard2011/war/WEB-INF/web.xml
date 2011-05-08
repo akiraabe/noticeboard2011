@@ -32,7 +32,6 @@
 		<filter-class>org.slim3.controller.FrontController</filter-class>
 	</filter>
 
-	<!--  
 	<filter-mapping>
 		<filter-name>AuthorizeFilter</filter-name>
 		<url-pattern>/</url-pattern>
@@ -43,7 +42,7 @@
 		<url-pattern>/person/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
-	-->
+
 	<filter-mapping>
 		<filter-name>HotReloadingFilter</filter-name>
 		<url-pattern>/*</url-pattern>

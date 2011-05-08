@@ -5,11 +5,13 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import org.noticeboard2011.controller.AbstractJsonController;
+import org.noticeboard2011.service.PersonService;
 import org.slim3.controller.Navigation;
 
 public class DeleteController extends AbstractJsonController {
 
     static Logger logger = Logger.getLogger(DeleteController.class.getName());
+    private PersonService personService = new PersonService();
     
     @Override
     public Navigation run() throws Exception {
@@ -18,10 +20,10 @@ public class DeleteController extends AbstractJsonController {
         logger.fine("method : " + request.getParameter("method"));
         logger.fine("deleteItems : " + request.getParameter("deleteItems"));
 
-        //TODO 削除処理の実装を行う。（第３イテレーション）
+        personService.delete(new Long(request.getParameter("deleteItems")));
         
         Map<String, String> map = new HashMap<String, String>();
-        map.put("returncode", "NOTIMPLEMENT");
+        map.put("returncode", "VALID");
         json(map);
         
         return null;
