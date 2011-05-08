@@ -37,12 +37,6 @@
 			<input type="text" ${f:text("place")} class="${f:errorClass('place', 'err')}" size="40" maxlength="20" />
 		</td>	
 	</tr>
-	<tr>
-		<td> グループ </td>
-		<td>
-			<input type="text" ${f:text("group")} class="${f:errorClass('group', 'err')}" size="40" maxlength="20" />
-		</td>	
-	</tr>
 </table>
 <input type="submit" value="登録"/>
 </form>

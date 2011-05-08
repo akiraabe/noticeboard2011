@@ -36,7 +36,7 @@ $(document).ready(function() {
 					{display: "行き先", name : "place", width : 100, sortable : false, align: "center"},
 					{display: "備考欄", name : "memo", width : 225, sortable : false, align: "center"},
 					{display: "hidden", name : "place2", width : 10, sortable : false, align: "center", hide: true},
-					{display: "グループ", name : "group", width : 150, sortable : true, align: "center"},
+					{display: "グループ", name : "group", width : 150, sortable : true, align: "center", hide: true},
 					{display: "hiddenGroup", name : "hiddenGroup", width : 10, sortable : false, align: "center", hide: true}
 					
 					
@@ -60,7 +60,7 @@ $(document).ready(function() {
 		nomsg: "項目はありません。",
 		showTableToggleBtn: true,
 		singleSelect: true,
-		width: 950,
+		width: 800,
 		height: "auto",
 		preProcess: preProcess
 		,onSuccess: postProcess
@@ -182,8 +182,8 @@ var deletePressed = function(command, grid) {
              		  { method:'delete',
               		   deleteItems:param},
             		   function(data, status) {
-                		   if (data.returncode == 'NOTIMPLEMENT') {
-                    		   alert('削除処理はサーバサイドでまだ実装されていません。');
+                		   if (data.returncode == 'INVALID') {
+                    		   alert('サーバにエラーが発生しました。');
                 		   }
                 		   $("#datatable").flexReload();
                 	   },
